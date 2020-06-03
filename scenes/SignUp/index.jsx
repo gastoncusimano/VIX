@@ -16,7 +16,7 @@ import {
   styles, Container, Form
 } from './index.style'
 import { margin } from '../../styles/mixins'
-import { BLACK_DARK, BLACK_LIGHT } from '../../styles/colors'
+import { PRIMARY_DARK, PRIMARY_LIGHT } from '../../styles/colors'
 /* STYLES END*/
 
 const index = ({ 
@@ -64,13 +64,13 @@ const index = ({
   }
   
   return (
-    <LinearGradient colors={[BLACK_LIGHT, BLACK_DARK]} style={styles.gradient} >
+    <LinearGradient colors={[PRIMARY_LIGHT, PRIMARY_DARK]} style={styles.gradient} >
       <ScrollView style={{ flex: 1 }} >
         <Container>
             <Animatable.View animation="bounceIn">
               <Image 
                 style={styles.logo} 
-                source={require('../../assets/ico_negativo.png')} 
+                source={require('../../assets/logo-blanco.png')} 
               />
             </Animatable.View>
             <Form>

@@ -59,9 +59,9 @@ const HeaderScreen = ({ scene, navigation, previous, profile }) => {
         }}
       >
         <View style={styles.circleAvatar}>
-          <Text style={styles.circleTextAvatar}>{`${profile.customer?.name
+          {/* <Text style={styles.circleTextAvatar}>{`${profile.customer?.name
             .charAt(0)
-            .toUpperCase()}${profile.customer?.last_name?.charAt(0).toUpperCase()}`}</Text>
+            .toUpperCase()}${profile.customer?.last_name?.charAt(0).toUpperCase()}`}</Text> */}
         </View>
         <View style={styles.welcomeText}>
           <Text style={{ color: "white" }}>
