@@ -142,7 +142,7 @@ class HomeHeaderCharts extends React.Component {
               >
               <TouchableHighlight activeOpacity={0.8} underlayColor="rgba(255,255,255,.1)" style={{borderRadius: 35, minHeight: 50}} onPress={() => this.props.navigation.navigate("Movimientos")}>
                   <View style={styles.amountCard}>
-                    <Text style={{fontSize: 23}}>$ <NumberFormat value={!_.isEmpty(this.props.profile.customer.accounts) ? this.props.profile?.customer?.accounts[0]?.balance : 0} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale renderText={value => <Text style={{color: 'white', fontSize: 40}}>{value}</Text>} /></Text>
+                    <Text style={{fontSize: 23}}>$ <NumberFormat value={0} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale renderText={value => <Text style={{color: 'white', fontSize: 40}}>{value}</Text>} /></Text>
                     <Text style={{textTransform: 'uppercase', color: 'white', opacity: .9, fontSize: 12}}>Dinero en cuenta</Text>
                     <View style={{position: 'absolute', right: -10}}>
                         <MaterialIcons name="keyboard-arrow-right" color="white" size={32}/>
