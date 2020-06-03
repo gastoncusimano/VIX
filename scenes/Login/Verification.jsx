@@ -21,7 +21,7 @@ import {
   styles, Container
 } from './index.style'
 import { margin } from '../../styles/mixins'
-import { BLACK_DARK, BLACK_LIGHT } from '../../styles/colors'
+import { PRIMARY_DARK, PRIMARY_LIGHT } from '../../styles/colors'
 /* STYLES END*/
 
 const CELL_COUNT = 6;
@@ -51,12 +51,12 @@ const index = ({
 
   return (
     <SafeAreaView style={{ flex: 1 }} >
-      <LinearGradient colors={[BLACK_LIGHT, BLACK_DARK]} style={styles.gradient} >
+      <LinearGradient colors={[PRIMARY_LIGHT, PRIMARY_DARK]} style={styles.gradient} >
         <Container>
           <Animatable.View animation="bounceIn" style={{ paddingTop: 20 }} >
             <Image 
               style={styles.logo} 
-              source={require('../../assets/ico_negativo.png')} 
+              source={require('../../assets/logo-blanco.png')} 
             />
           </Animatable.View>
           <View >

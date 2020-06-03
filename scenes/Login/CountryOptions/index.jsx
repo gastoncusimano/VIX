@@ -8,7 +8,7 @@ import { Appbar, withTheme, Title, TouchableRipple, Avatar, Text } from 'react-n
 /* STYLES - UTILITIES */
 import { styles } from './index.style'
 import countrys from '../../../utils/countrys'
-import { BLACK_DARK, BLACK_LIGHT } from '../../../styles/colors'
+import { PRIMARY_DARK, PRIMARY_LIGHT } from '../../../styles/colors'
 /* STYLES - UTILITIES */
 
 const CountryOptions = ({ navigation, theme: { colors }, route: { params } }) => {
@@ -21,7 +21,7 @@ const CountryOptions = ({ navigation, theme: { colors }, route: { params } }) =>
   return (
     <>
       <LinearGradient 
-        colors={[BLACK_DARK, BLACK_LIGHT]} 
+        colors={[PRIMARY_LIGHT, PRIMARY_DARK]} 
         style={styles.gradient} 
         start={[1, 0.3]} 
         end={[0, 0.6]}
@@ -34,7 +34,7 @@ const CountryOptions = ({ navigation, theme: { colors }, route: { params } }) =>
       <LinearGradient 
         end={[0, 0.6]}
         start={[1, .6]}
-        colors={[BLACK_DARK, BLACK_LIGHT]}
+        colors={[PRIMARY_LIGHT, PRIMARY_DARK]}
       >
         <View style={{ borderTopEndRadius: 10, borderTopStartRadius: 10, marginTop: 5, backgroundColor: "#FFF", height: "100%" }} >
           <FlatList
