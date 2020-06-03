@@ -81,44 +81,6 @@ class HomeHeaderCharts extends React.Component {
     this.state = {
       refreshing: false
     }
-    this.graphOpacity = new Value(1);
-
-    this.onStateChange = event([
-      {
-        nativeEvent: ({ state }) =>
-          block([
-            cond(
-              eq(state, State.END),
-              set(this.graphOpacity, runTiming(new Clock(), 1, 0)),
-            )
-          ])
-      }
-    ]);
-
-    this.onOpenState = event([
-      {
-        nativeEvent: ({ state }) =>
-        block([
-          cond(
-            eq(state, State.END),
-            set(this.graphOpacity, runTiming(new Clock(), 0, 1)),
-            )
-          ])
-      }
-    ]);
-
-    this.heightDividir = interpolate(this.graphOpacity, {
-      inputRange: [0, 1],
-      outputRange: [DEVICE_HEIGHT / 3.8, DEVICE_HEIGHT / 1.6],
-      extrapolate: Extrapolate.CLAMP
-    });
-
-
-    this.arrowDown = interpolate(this.graphOpacity, {
-      inputRange: [0, 0.5],
-      outputRange: [100, 0],
-      extrapolate: Extrapolate.CLAMP
-    });
   }
   render() {
     return (
@@ -127,7 +89,7 @@ class HomeHeaderCharts extends React.Component {
           showsVerticalScrollIndicator={false}
           style={{ flex: 1, width: "100%"}}>
         <LinearGradient 
-          colors={['#F60000', '#FF6F1F']}
+          colors={['#00315f', '#004e97']}
           start={[0, 0.6]}
           end={[1, 0.3]}
           style={{
@@ -140,56 +102,8 @@ class HomeHeaderCharts extends React.Component {
           <Animated.View
               style={{width: '100%',backgroundColor: "#f9130600", height: this.heightDividir, zIndex: 1, display: 'flex', paddingTop: 35}}
               >
-              <TouchableHighlight activeOpacity={0.8} underlayColor="rgba(255,255,255,.1)" style={{borderRadius: 35, minHeight: 50}} onPress={() => this.props.navigation.navigate("Movimientos")}>
-                  <View style={styles.amountCard}>
-                    <Text style={{fontSize: 23}}>$ <NumberFormat value={0} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale renderText={value => <Text style={{color: 'white', fontSize: 40}}>{value}</Text>} /></Text>
-                    <Text style={{textTransform: 'uppercase', color: 'white', opacity: .9, fontSize: 12}}>Dinero en cuenta</Text>
-                    <View style={{position: 'absolute', right: -10}}>
-                        <MaterialIcons name="keyboard-arrow-right" color="white" size={32}/>
-                    </View>
-                  </View>
-              </TouchableHighlight>
-              <Animated.View style={{ top: 50, opacity: this.graphOpacity}}>
-                <LineChart
-                  data={this.props.data ? this.props.data : linedata}
-                  width={Dimensions.get('window').width} // from react-native
-                  height={180}
-                  yAxisSuffix=" k"
-                  animate
-                  animationDuration={300}
-                  chartConfig={{
-                      fillShadowGradientOpacity: 240,
-                      backgroundGradientFromOpacity: 0,
-                      backgroundGradientToOpacity: 0.5,
-                      backgroundGradientFrom: '#f91306',
-                      backgroundGradientTo: '#ff5e1a',
-                      decimalPlaces: 0, // optional, defaults to 2dp
-                      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                      propsForDots: {
-                        r: "6",
-                        strokeWidth: "2",
-                      }
-                }}
-                bezier
-                style={{
-                    position: 'absolute',
-                    zIndex: 5,
-                }}
-                />
-              </Animated.View>
-              <TapGestureHandler onHandlerStateChange={this.onStateChange}>
-                <Animated.Text style={{justifyContent: 'center', alignSelf: 'center', position: 'absolute', bottom: 35, opacity: this.graphOpacity}}>
-                  <MaterialIcons name="keyboard-arrow-up" color="white" size={32} />
-                </Animated.Text>
-              </TapGestureHandler>
-              <TapGestureHandler onHandlerStateChange={this.onOpenState}>
-                <Animated.Text style={{justifyContent: 'center', alignSelf: 'center', position: 'absolute', bottom: 35, opacity: this.arrowDown}}>
-                  <MaterialIcons name="keyboard-arrow-down" color="white" size={32} />
-                </Animated.Text>
-              </TapGestureHandler>
           </Animated.View>
           </LinearGradient>
-          <QuickActions navigation={this.props.navigation} />
         </ScrollView>
       </View>
     )

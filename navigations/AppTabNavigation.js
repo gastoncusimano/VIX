@@ -11,7 +11,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, withTheme } from "react-native-paper";
 import Home from "../scenes/HomePage";
-
+import * as _ from 'lodash'
 import CashInStack from "./CashInStack";
 import ActivitiesStack from "./ActivitiesStack";
 import TransferenceStack from "./TransferStack";
@@ -38,7 +38,7 @@ const HeaderScreen = ({ scene, navigation, previous, profile }) => {
 
   return options.title === "Gollet" ? (
     <LinearGradient
-      colors={["#F60000", "#FF6F1F"]}
+      colors={["#00315f", "#004e97"]}
       start={[0, 0.5]}
       end={[0.8, 1]}
       style={{
@@ -59,16 +59,15 @@ const HeaderScreen = ({ scene, navigation, previous, profile }) => {
         }}
       >
         <View style={styles.circleAvatar}>
-          <Text style={styles.circleTextAvatar}>{`${profile.customer?.name
-            .charAt(0)
-            .toUpperCase()}${profile.customer?.last_name?.charAt(0).toUpperCase()}`}</Text>
+          <Text style={styles.circleTextAvatar}>{`${!_.isEmpty(profile.customer.name) ? profile.customer.name.charAt(0)
+            .toUpperCase() : ""}${!_.isEmpty(profile.customer.last_name) ? profile.customer.last_name.charAt(0).toUpperCase() : "" }`}</Text>
         </View>
         <View style={styles.welcomeText}>
           <Text style={{ color: "white" }}>
             {" "}Bienvenido{" "}
             <Text
               style={{ fontWeight: "bold" }}
-            >{`${profile.name} ${profile.last_name}`}</Text>
+            >{`${profile.customer?.name} ${profile.customer?.last_name}`}</Text>
           </Text>
         </View>
         <View style={styles.circleBell}>

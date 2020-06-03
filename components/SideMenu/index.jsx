@@ -130,13 +130,14 @@ function CustomDrawerContent(props) {
 function SideMenu({ profile, logout }) {
   return (
     <Drawer.Navigator 
-      drawerContent={props => CustomDrawerContent({profile, logout, ...props})}
-      drawerStyle={{ backgroundColor: "#7898fd" }}
-      drawerContentOptions={{
-        itemStyle: { borderRadius: 0, marginHorizontal: 0, paddingHorizontal: 15 },
-        labelStyle: { color: "#FFF", marginLeft: -15 },
-        activeBackgroundColor: "rgba(255,255,255, 0.2)",
-      }}
+    drawerContent={props => CustomDrawerContent({profile, logout, ...props})}
+    drawerStyle={{ backgroundColor: "#7898fd" }}
+    drawerContentOptions={{
+      itemStyle: { borderRadius: 0, marginHorizontal: 0, paddingHorizontal: 15 },
+      labelStyle: { color: "#FFF", marginLeft: -15 },
+      activeBackgroundColor: "rgba(255,255,255, 0.2)",
+    }}
+      drawerPosition={'right'}
     > 
       <Drawer.Screen
         name="Inicio"
