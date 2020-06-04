@@ -48,7 +48,15 @@ class SendScene extends React.Component {
   state = {
     ammount: "",
     reason: "",
+    addCard: false,
+    card: {
+      name: '',
+      numero: '',
+      alias: ''
+    }
   }
+  toggleAddCard = () => this.setState({ ...this.state, addCard: true })
+  onChangeCard = (field, value) => this.setState({ ...this.state, card: { ...this.state.card, [field]: value } })
   onChange = (value, fieldName) => this.setState({ ...this.state, [fieldName]: value })
   handleViewRef = ref => this.view = ref
   bounce = () => this.view.bounceIn(800).then(endState => console.log(endState.finished ? 'bounce finished' : 'bounce cancelled'));
@@ -105,7 +113,7 @@ class SendScene extends React.Component {
                         </View>
                       </TouchableRipple>
                     ))}
-                    <TouchableRipple style={{ width: 70, alignItems: 'center', padding: 5 }} onPress={() => { }} rippleColor="rgba(0,0,0,.25)">
+                    <TouchableRipple style={{ width: 70, alignItems: 'center', padding: 5 }} onPress={this.toggleAddCard} rippleColor="rgba(0,0,0,.25)">
                       <>
                         <View style={styles.btnMore}>
                           <Ionicons name="ios-add" size={20} color="#FFF" />
@@ -116,6 +124,37 @@ class SendScene extends React.Component {
                   </>
                 </ScrollView>
               </View>
+              {this.state.addCard &&
+                <View>
+                  <View style={{ flexDirection: 'row' }} >
+                    <View style={{ width: 20, height: 20, backgroundColor: colors.accent, borderRadius: 50, marginRight: 10 }} />
+                    <Text style={{ color: colors.darkText, fontSize: 16, fontWeight: 'bold', marginBottom: 10 }} >Ingresa la tarjeta de destino</Text>
+                  </View>
+                  <View>
+                    <TextInput
+                      value={this.state.reason}
+                      placeholder="Nombre y Apellido del titular"
+                      onChangeText={(value) => this.onChangeCard("name", value)}
+                      placeholderTextColor={colors.darkText}
+                      style={styles.inputMotivo}
+                    />
+                    <TextInput
+                      value={this.state.reason}
+                      placeholder="Nro de Tarjeta"
+                      onChangeText={(value) => this.onChangeCard("numero", value)}
+                      placeholderTextColor={colors.darkText}
+                      style={styles.inputMotivo}
+                    />
+                    <TextInput
+                      value={this.state.reason}
+                      placeholder="Alias de Tarjeta"
+                      onChangeText={(value) => this.onChangeCard("alias", value)}
+                      placeholderTextColor={colors.darkText}
+                      style={styles.inputMotivo}
+                    />
+                  </View>
+                </View>
+              }
               <View style={{ flex: 1, marginBottom: 20 }} >
                 <Animatable.View ref={this.handleViewRef} style={styles.wrappInputMoney}>
                   <Text style={[styles.symbol, { color: colors.primary }]}>$</Text>
