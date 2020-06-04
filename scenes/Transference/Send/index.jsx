@@ -92,39 +92,41 @@ class SendScene extends React.Component {
                 colors={this.props.theme.colors}
                 subtitle={params.numberParsed}
               />
-              <View>
-                <View style={{ flexDirection: 'row' }} >
-                  <View style={{ width: 20, height: 20, backgroundColor: colors.accent, borderRadius: 50, marginRight: 10 }} />
-                  <Text style={{ color: colors.darkText, fontSize: 16, fontWeight: 'bold', marginBottom: 10 }} >Seleccione la tarjeta de destino</Text>
-                </View>
-                <ScrollView contentContainerStyle={styles.cardContainer} horizontal >
-                  <>
-                    {[{
-                      id: '1',
-                      alias: 'Tarjeta A'
-                    }, {
-                      id: '2',
-                      alias: 'Tarjeta B'
-                    }].map((card, i) => (
-                      <TouchableRipple key={i} onPress={() => { }} rippleColor="rgba(0,0,0,.25)" >
-                        <View style={styles.card}>
-                          <Image style={{ marginBottom: 5 }} source={require('../../../assets/icons/card.png')} />
-                          <Text style={{ color: colors.subtitleText }}>{card.alias}</Text>
-                        </View>
+              {params.exists &&
+                <View>
+                  <View style={{ flexDirection: 'row' }} >
+                    <View style={{ width: 20, height: 20, backgroundColor: colors.accent, borderRadius: 50, marginRight: 10 }} />
+                    <Text style={{ color: colors.darkText, fontSize: 16, fontWeight: 'bold', marginBottom: 10 }} >Seleccione la tarjeta de destino</Text>
+                  </View>
+                  <ScrollView contentContainerStyle={styles.cardContainer} horizontal >
+                    <>
+                      {[{
+                        id: '1',
+                        alias: 'Tarjeta A'
+                      }, {
+                        id: '2',
+                        alias: 'Tarjeta B'
+                      }].map((card, i) => (
+                        <TouchableRipple key={i} onPress={() => { }} rippleColor="rgba(0,0,0,.25)" >
+                          <View style={styles.card}>
+                            <Image style={{ marginBottom: 5 }} source={require('../../../assets/icons/card.png')} />
+                            <Text style={{ color: colors.subtitleText }}>{card.alias}</Text>
+                          </View>
+                        </TouchableRipple>
+                      ))}
+                      <TouchableRipple style={{ width: 70, alignItems: 'center', padding: 5 }} onPress={this.toggleAddCard} rippleColor="rgba(0,0,0,.25)">
+                        <>
+                          <View style={styles.btnMore}>
+                            <Ionicons name="ios-add" size={20} color="#FFF" />
+                          </View>
+                          <Text style={{ color: colors.accent, textAlign: 'center' }}>Agregar Tarjeta</Text>
+                        </>
                       </TouchableRipple>
-                    ))}
-                    <TouchableRipple style={{ width: 70, alignItems: 'center', padding: 5 }} onPress={this.toggleAddCard} rippleColor="rgba(0,0,0,.25)">
-                      <>
-                        <View style={styles.btnMore}>
-                          <Ionicons name="ios-add" size={20} color="#FFF" />
-                        </View>
-                        <Text style={{ color: colors.accent, textAlign: 'center' }}>Agregar Tarjeta</Text>
-                      </>
-                    </TouchableRipple>
-                  </>
-                </ScrollView>
-              </View>
-              {this.state.addCard &&
+                    </>
+                  </ScrollView>
+                </View>
+              }
+              {this.state.addCard || !params.exists &&
                 <View>
                   <View style={{ flexDirection: 'row' }} >
                     <View style={{ width: 20, height: 20, backgroundColor: colors.accent, borderRadius: 50, marginRight: 10 }} />

@@ -76,11 +76,11 @@ function TransferScene({
     })
     .then(function(response) {
       let exists = response.data[0].exists
-      if (exists) {
-        handleNavigate("SendMoney", { user: object, numberParsed: number})
-      } else {
-        handleNavigate("NoFound", { user: object })
-      }
+      handleNavigate("SendMoney", { user: object, numberParsed: number, exists})
+      // if (exists) {
+      // } else {
+      //   handleNavigate("NoFound", { user: object })
+      // }
     });
   }
   const filterContacts = (query) => {
