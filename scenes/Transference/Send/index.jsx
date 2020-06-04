@@ -51,7 +51,7 @@ class SendScene extends React.Component {
     addCard: false,
     card: {
       name: '',
-      numero: '',
+      number: '',
       alias: ''
     }
   }
@@ -132,21 +132,21 @@ class SendScene extends React.Component {
                   </View>
                   <View>
                     <TextInput
-                      value={this.state.reason}
+                      value={this.state.card.name}
                       placeholder="Nombre y Apellido del titular"
                       onChangeText={(value) => this.onChangeCard("name", value)}
                       placeholderTextColor={colors.darkText}
                       style={styles.inputMotivo}
                     />
                     <TextInput
-                      value={this.state.reason}
+                      value={this.state.card.number}
                       placeholder="Nro de Tarjeta"
-                      onChangeText={(value) => this.onChangeCard("numero", value)}
+                      onChangeText={(value) => this.onChangeCard("number", value)}
                       placeholderTextColor={colors.darkText}
                       style={styles.inputMotivo}
                     />
                     <TextInput
-                      value={this.state.reason}
+                      value={this.state.card.alias}
                       placeholder="Alias de Tarjeta"
                       onChangeText={(value) => this.onChangeCard("alias", value)}
                       placeholderTextColor={colors.darkText}
