@@ -10,7 +10,7 @@ import actions from '../redux/Auth/actions'
 import AppNavigation from '../components/SideMenu'
 /* OWN COMPONENTS */
 
-
+import { PRIMARY_DARK, PRIMARY_LIGHT } from '../styles/colors'
 
 const Stack = createStackNavigator()
 
@@ -22,12 +22,12 @@ function Root(props) {
   if(!props.isReady) {
     return (
       <LinearGradient 
-        colors={['#F60000', '#FF6F1F']}
+        colors={[PRIMARY_LIGHT, PRIMARY_DARK]}
         start={[0, 0.6]}
         end={[1, 0.3]}
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
       >
-        <Image style={{ width: 200, height: 200, resizeMode: 'contain' }}  source={require('../assets/ico_negativo.png')} />
+        <Image style={{ width: 200, height: 200, resizeMode: 'contain' }}  source={require('../assets/logo-blanco.png')} />
         <ActivityIndicator size="large" color="#FFF" />
       </LinearGradient>
     )
