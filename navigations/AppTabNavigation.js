@@ -95,15 +95,15 @@ function HomeNavigation() {
       headerMode="screen"
     >
       <Stack.Screen
-        name="InsertCard"
-        component={InsertCard}
-      />
-      <Stack.Screen name="Camera" component={Camera}/>
-      <Stack.Screen
         name="Home"
         component={Home}
         options={{ title: "Gollet" }}
       />
+      <Stack.Screen
+        name="InsertCard"
+        component={InsertCard}
+      />
+      <Stack.Screen name="Camera" component={Camera}/>
       <Stack.Screen
         name="Movimientos"
         component={ActivitiesStack}

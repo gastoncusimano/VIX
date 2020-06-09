@@ -202,7 +202,7 @@ class SendScene extends React.Component {
                         </View>
                       </TouchableRipple>
                     ))}
-                    <TouchableRipple style={{ width: 70, alignItems: 'center', padding: 5 }} onPress={() => { }} rippleColor="rgba(0,0,0,.25)">
+                    <TouchableRipple style={{ width: 70, alignItems: 'center', padding: 5 }} onPress={() => navigation.push('InsertCard')} rippleColor="rgba(0,0,0,.25)">
                       <>
                         <View style={styles.btnMore}>
                           <Ionicons name="ios-add" size={20} color="#FFF" />

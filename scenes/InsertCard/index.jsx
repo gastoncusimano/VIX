@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import NumberFormat from 'react-number-format'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -6,6 +7,7 @@ import { View, TextInput, ScrollView } from 'react-native'
 import { Appbar, Button, withTheme, Text, Title, RadioButton, TouchableRipple } from 'react-native-paper'
 
 /* STYLES */
+import actions from '../../redux/InsertCard/actions'
 import { Container, styles } from './index.style'
 import { PRIMARY_DARK, PRIMARY_LIGHT, SECONDARY } from '../../styles/colors'
 /* STYLES END*/
@@ -13,12 +15,15 @@ import { PRIMARY_DARK, PRIMARY_LIGHT, SECONDARY } from '../../styles/colors'
 const InsertCard = ({ theme: { colors }, navigation }) => {
   const [state, setState] = useState({
     cvv: '',
-    name: '',
     alias: '',
-    number: '',
     destiny: '',
     cardImage: null,
-    expiration: '',
+    card_number: '',
+    expiraton_date: '',
+    card_holder_name: '',
+    card_type: { name: 'Debito' },
+    card_brand: { name: 'Visa' },
+    card_issuer: { name: 'Banco Frances' }
   })
 
   const takePicture = (image) => {
@@ -28,7 +33,7 @@ const InsertCard = ({ theme: { colors }, navigation }) => {
   onChange = (field, value) => {
     setState({ ...state, [field]: value })
   }
-  console.log(state.cardImage)
+
   return (
     <>
       <LinearGradient
@@ -62,22 +67,22 @@ const InsertCard = ({ theme: { colors }, navigation }) => {
               </TouchableRipple>
               <View>
                 <TextInput
-                  value={state.name}
+                  value={state.card_holder_name}
                   placeholder="Nombre y Apellido del titular"
-                  onChangeText={(value) => onChange("name", value)}
+                  onChangeText={(value) => onChange("card_holder_name", value)}
                   placeholderTextColor={colors.darkText}
                   style={styles.input}
                 />
                 <TextInput
-                  value={state.number}
+                  value={state.card_number}
                   placeholder="Nro de Tarjeta"
-                  onChangeText={(value) => onChange("number", value)}
+                  onChangeText={(value) => onChange("card_number", value)}
                   placeholderTextColor={colors.darkText}
                   style={styles.input}
                 />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
                   <NumberFormat
-                    value={state.expiration}
+                    value={state.expiraton_date}
                     format={"##/##"}
                     displayType="text"
                     renderText={value => (
@@ -85,7 +90,7 @@ const InsertCard = ({ theme: { colors }, navigation }) => {
                         value={value}
                         placeholder="Vencimiento"
                         keyboardType="phone-pad"
-                        onChangeText={(text) => onChange("expiration", text)}
+                        onChangeText={(text) => onChange("expiraton_date", text)}
                         placeholderTextColor={colors.darkText}
                         style={[styles.input, { width: '48%' }]}
                       />
@@ -151,4 +156,6 @@ const InsertCard = ({ theme: { colors }, navigation }) => {
   )
 }
 
-export default withTheme(InsertCard)
+export default connect(state => ({
+
+}), {})(withTheme(InsertCard))
