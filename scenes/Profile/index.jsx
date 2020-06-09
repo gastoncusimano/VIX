@@ -12,7 +12,7 @@ import actions from '../../redux/Profile/actions'
 import {styles, Container} from './index.style'
 import { PRIMARY, SECONDARY } from '../../styles/colors'
 
-const ProfileScene = ({ navigation, profile, theme, pickImage, image, deleteImage }) => {
+const ProfileScene = ({ navigation, profile, theme, pickImage, image, deleteImage, takePicture }) => {
   const [visible, setVisible] = useState(false)
   const navigationToView = (path, props) => navigation.push(path, { ...props })
   const handleNavigate = _.debounce(navigationToView, 180)
@@ -92,7 +92,7 @@ const ProfileScene = ({ navigation, profile, theme, pickImage, image, deleteImag
                 <View></View>
               </View>
               <View style={{ flexDirection: 'row', paddingBottom: 20 }} >
-                <TouchableRipple style={{ marginRight: 10 }} rippleColor="rgba(0,0,0,.15)"  onPress={() => {setVisible(false); handleNavigate('Camera')}}>
+                <TouchableRipple style={{ marginRight: 10 }} rippleColor="rgba(0,0,0,.15)"  onPress={() => {setVisible(false); handleNavigate('Camera', { takePicture })}}>
                   <View style={styles.iconContainer} >
                     <View style={styles.photoIcon}>
                       <Ionicon name="ios-camera" size={30} color={SECONDARY} />
@@ -133,6 +133,7 @@ export default connect(state => ({
   profile: state.Auth.profile,
   image: state.Profile.image,
 }), { 
+  takePicture: actions.snap,
   pickImage: actions.pickImage,
   deleteImage: actions.deleteImage,
 })(withTheme(ProfileScene))

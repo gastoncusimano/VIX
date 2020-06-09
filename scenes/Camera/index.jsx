@@ -22,7 +22,7 @@ function CameraScene(props) {
   async function snap() {
     if(cameraRef) {
       let photo = await cameraRef.takePictureAsync()
-      await props.takePicture(photo.uri)
+      await props.route.params.takePicture(photo.uri)
       await props.navigation.goBack()
     }
   }
@@ -116,5 +116,4 @@ export default connect(state => ({
   hasPermission: state.Profile.hasPermission
 }), { 
   useCamera: actions.useCamera, 
-  takePicture: actions.snap,
 })(CameraScene)

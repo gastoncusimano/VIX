@@ -12,11 +12,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Text, withTheme } from "react-native-paper";
 import Home from "../scenes/HomePage";
 
+import InsertCard from '../scenes/InsertCard'
+import Camera from '../scenes/Camera'
 import CashInStack from "./CashInStack";
-import ActivitiesStack from "./ActivitiesStack";
-import TransferenceStack from "./TransferStack";
 import PaymentStack from "./PaymentStack";
 import ProfileStack from "./ProfileStack";
+import ActivitiesStack from "./ActivitiesStack";
+import TransferenceStack from "./TransferStack";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -92,6 +94,11 @@ function HomeNavigation() {
       screenOptions={{ header: (props) => <VisibleHeaderScreen {...props} /> }}
       headerMode="screen"
     >
+      <Stack.Screen
+        name="InsertCard"
+        component={InsertCard}
+      />
+      <Stack.Screen name="Camera" component={Camera}/>
       <Stack.Screen
         name="Home"
         component={Home}
