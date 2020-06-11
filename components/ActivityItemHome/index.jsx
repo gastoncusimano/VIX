@@ -10,16 +10,18 @@ import {AntDesign} from '@expo/vector-icons'
 import { styles, FilledSquare, Amount } from './index.style'
 /* STYLES */
 
-const ActivityItem = ({ status, value, title, description, date }) => {
+const ActivityItem = ({ status, value, title, description, date, initials }) => {
   const name = status === "more" ? "arrowright" : "arrowleft"
   return (
     <Animatable.View animation="bounceIn" delay={200} style={styles.containerRow}>
       <FilledSquare type={name}>
-        <AntDesign name={name} size={22} color={name === 'arrowleft' ? "#f60900" : "#00c767"}/>
+        <Text>{initials}</Text>
+        {/* <AntDesign name={name} size={22} color={name === 'arrowleft' ? "#f60900" : "#00c767"}/> */}
       </FilledSquare>
       <View style={{ flex: 1 }} >
+        <Paragraph style={styles.paragraph}>{status === 'more' ? 'Recibí dinero de:' :  'Envié dinero a:'}</Paragraph>
         <Title style={styles.title}>{title}</Title>
-        <Paragraph style={styles.paragraph} >{description}</Paragraph>
+        {/* <Paragraph style={styles.paragraph} >{description}</Paragraph> */}
       </View>
       <View style={{alignItems: "flex-end"}}>
         <NumberFormat value={value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale prefix={'$ '} renderText={value => <Amount type={name}>{value}</Amount>} />

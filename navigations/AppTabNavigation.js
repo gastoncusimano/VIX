@@ -99,11 +99,8 @@ function HomeNavigation() {
         component={Home}
         options={{ title: "Gollet" }}
       />
-      <Stack.Screen
-        name="InsertCard"
-        component={InsertCard}
-      />
       <Stack.Screen name="Camera" component={Camera}/>
+      <Stack.Screen name="InsertCard" component={InsertCard}/>
       <Stack.Screen
         name="Movimientos"
         component={ActivitiesStack}

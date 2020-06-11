@@ -1,10 +1,12 @@
+import _ from 'lodash'
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import NumberFormat from 'react-number-format'
+import { TextInputMask } from 'react-native-masked-text'
 import { LinearGradient } from 'expo-linear-gradient'
 import { View, TextInput, ScrollView } from 'react-native'
-import { Appbar, Button, withTheme, Text, Title, RadioButton, TouchableRipple } from 'react-native-paper'
+import { Appbar, Button, withTheme, Text, Title, Checkbox, TouchableRipple } from 'react-native-paper'
 
 /* STYLES */
 import actions from '../../redux/InsertCard/actions'
@@ -12,18 +14,17 @@ import { Container, styles } from './index.style'
 import { PRIMARY_DARK, PRIMARY_LIGHT, SECONDARY } from '../../styles/colors'
 /* STYLES END*/
 
-const InsertCard = ({ theme: { colors }, navigation }) => {
+const InsertCard = ({ theme: { colors }, navigation, submitCard, loading }) => {
   const [state, setState] = useState({
     cvv: '',
-    alias: '',
-    destiny: '',
-    cardImage: null,
+    public: false,
+    reference: '',
     card_number: '',
-    expiraton_date: '',
+    expiration_date: '',
     card_holder_name: '',
-    card_type: { name: 'Debito' },
-    card_brand: { name: 'Visa' },
-    card_issuer: { name: 'Banco Frances' }
+    card_type: { id: 1 },
+    card_brand: { id: 1 },
+    card_issuer: { id: 1 }
   })
 
   const takePicture = (image) => {
@@ -32,6 +33,29 @@ const InsertCard = ({ theme: { colors }, navigation }) => {
 
   onChange = (field, value) => {
     setState({ ...state, [field]: value })
+  }
+
+  validateFields = () => {
+    let values = {...state}
+    for (const key in values) {
+      if (_.isEmpty(values[key]) && key !== 'public') {
+        delete values[key]
+      }
+    }
+
+    for (const key in state) {
+      if (!values.hasOwnProperty(key)) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  const submit = () => {
+    if(validateFields()) {
+      submitCard(state, navigation)
+    }
   }
 
   return (
@@ -81,21 +105,14 @@ const InsertCard = ({ theme: { colors }, navigation }) => {
                   style={styles.input}
                 />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                  <NumberFormat
-                    value={state.expiraton_date}
-                    format={"##/##"}
-                    displayType="text"
-                    renderText={value => (
-                      <TextInput
-                        value={value}
-                        placeholder="Vencimiento"
-                        keyboardType="phone-pad"
-                        onChangeText={(text) => onChange("expiraton_date", text)}
-                        placeholderTextColor={colors.darkText}
-                        style={[styles.input, { width: '48%' }]}
-                      />
-                    )
-                    }
+                  <TextInputMask
+                    type="datetime"
+                    style={[styles.input, { width: '48%' }]}
+                    value={state.expiration_date}
+                    options={{ format: 'MM/YY' }}
+                    placeholder="Vencimiento"
+                    placeholderTextColor={colors.darkText}
+                    onChangeText={text => onChange('expiration_date', text)}
                   />
                   <TextInput
                     value={state.cvv}
@@ -107,9 +124,9 @@ const InsertCard = ({ theme: { colors }, navigation }) => {
                 </View>
                 <View>
                   <TextInput
-                    value={state.alias}
+                    value={state.reference}
                     placeholder="Alias de Tarjeta"
-                    onChangeText={(value) => onChange("alias", value)}
+                    onChangeText={(value) => onChange("reference", value)}
                     placeholderTextColor={colors.darkText}
                     style={styles.input}
                   />
@@ -117,37 +134,28 @@ const InsertCard = ({ theme: { colors }, navigation }) => {
                 </View>
               </View>
             </View>
-            <View style={{ padding: 20, borderWidth: 1, borderRadius: 10, borderColor: SECONDARY }} >
+            <View style={{ padding: 20, borderWidth: 1, borderRadius: 10, borderColor: SECONDARY, marginBottom: 20 }} >
               <Title style={{ color: colors.darkText, fontSize: 16 }}>Por favor seleccione el destino de la tarjeta ingresada</Title>
               <View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }} >
-                  <RadioButton
-                    value="1"
-                    status={state.destiny === '1' ? 'checked' : 'unchecked'}
-                    onPress={() => { onChange('destiny', '1'); }}
+                  <Checkbox
+                    status={state.public ? 'checked' : 'unchecked'}
+                    onPress={() => { onChange('public', !state.public); }}
                     uncheckedColor={SECONDARY}
                   />
                   <Text style={{ color: colors.darkText }} >Recibir Dinero</Text>
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }} >
-                  <RadioButton
-                    value="2"
-                    status={state.destiny === '2' ? 'checked' : 'unchecked'}
-                    onPress={() => { onChange('destiny', '2'); }}
-                    uncheckedColor={SECONDARY}
-                  />
-                  <Text style={{ color: colors.darkText }} >Enviar Dinero</Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }} >
-                  <RadioButton
-                    value="3"
-                    status={state.destiny === '3' ? 'checked' : 'unchecked'}
-                    onPress={() => { onChange('destiny', '3'); }}
-                    uncheckedColor={SECONDARY}
-                  />
-                  <Text style={{ color: colors.darkText }} >Ambas</Text>
-                </View>
               </View>
+            </View>
+            <View>
+              <Button 
+                mode="contained" 
+                color={colors.accent} 
+                onPress={submit}
+                loading={loading}
+                disabled={loading}
+                labelStyle={{ color: colors.primary }} 
+              >Confirmar</Button>
             </View>
           </Container>
         </ScrollView>
@@ -157,5 +165,5 @@ const InsertCard = ({ theme: { colors }, navigation }) => {
 }
 
 export default connect(state => ({
-
-}), {})(withTheme(InsertCard))
+  loading: state.InsertCard.fetching
+}), { submitCard: actions.submitCard })(withTheme(InsertCard))
