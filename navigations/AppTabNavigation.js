@@ -19,7 +19,7 @@ import PaymentStack from "./PaymentStack";
 import ProfileStack from "./ProfileStack";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+import { Feather } from '@expo/vector-icons'; 
 /* STYLES */
 import { styles } from "./index.style";
 /* STYLES */
@@ -53,7 +53,7 @@ const HeaderScreen = ({ scene, navigation, previous, profile }) => {
         style={{
           width: "100%",
           backgroundColor: "#00000000",
-          height: 90,
+          height: 120,
           zIndex: 1,
           paddingTop: 35,
         }}
@@ -63,18 +63,15 @@ const HeaderScreen = ({ scene, navigation, previous, profile }) => {
             .toUpperCase() : ""}${!_.isEmpty(profile.customer.last_name) ? profile.customer.last_name.charAt(0).toUpperCase() : "" }`}</Text>
         </View>
         <View style={styles.welcomeText}>
-          <Text style={{ color: "white" }}>
-            {" "}Bienvenido{" "}
+          <Text style={{ color: "white", fontSize: 22 }}>
+            Bienvenido{"\n"}
             <Text
-              style={{ fontWeight: "bold" }}
+              style={{ fontWeight: "bold", color: '#ffac00' }}
             >{`${profile.customer?.name} ${profile.customer?.last_name}`}</Text>
           </Text>
         </View>
         <View style={styles.circleBell}>
-          <Image
-            style={{ resizeMode: "stretch", width: 20, height: 20 }}
-            source={require("../assets/icons/bell.png")}
-          />
+          <Feather name="menu" size={32} color="white" />
         </View>
       </View>
     </LinearGradient>

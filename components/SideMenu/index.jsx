@@ -16,7 +16,7 @@ import {
 } from 'react-native-paper';
 
 import actions from '../../redux/Auth/actions'
-import { PRIMARY, SECONDARY } from '../../styles/colors'
+import { PRIMARY_DARK, PRIMARY_LIGHT } from '../../styles/colors'
 
 /* CUSTOM COMPONENTS */
 import { ProfileButton } from './index.style'
@@ -42,8 +42,6 @@ const Styles = StyleSheet.create({
   }
 })
 
-
-
 const DrawerIcon = ({ color, size, name }) => (
   <Icon 
     name={name}
@@ -55,7 +53,7 @@ const DrawerIcon = ({ color, size, name }) => (
 
 function CustomDrawerContent(props) {
   return (
-    <LinearGradient  colors={[PRIMARY, SECONDARY]} style={{ flex: 1, alignItems: "stretch", width: "100%" }}>
+    <LinearGradient  colors={[PRIMARY_DARK, PRIMARY_LIGHT]} style={{ flex: 1, alignItems: "stretch", width: "100%" }}>
       <DrawerContentScrollView {...props}>
           <PaperDrawer.Section style={{ flex: 1, flexDirection: "row", alignItems: "center", padding: 20 }}>
             <Avatar.Image
@@ -137,7 +135,6 @@ function SideMenu({ profile, logout }) {
       labelStyle: { color: "#FFF", marginLeft: -15 },
       activeBackgroundColor: "rgba(255,255,255, 0.2)",
     }}
-      drawerPosition={'right'}
     > 
       <Drawer.Screen
         name="Inicio"

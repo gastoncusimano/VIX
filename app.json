@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Gollet",
-    "slug": "Gollet",
+    "name": "VIX",
+    "slug": "VIX",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
       "android"
     ],
     "android": {
-      "package": "com.goiar.gollet",
+      "package": "com.goiar.vix",
       "versionCode": 1
     },
     "version": "1.0.0",

@@ -8,7 +8,7 @@ import { Appbar, TouchableRipple, Title, Text, withTheme, Button } from 'react-n
 /* STYLES - ACTIONS - OWN COMPONENTS */
 import actions from '../../../redux/Activities/actions'
 import { Container, styles } from './index.style'
-import { PRIMARY, SECONDARY } from '../../../styles/colors'
+import { PRIMARY_DARK, PRIMARY_LIGHT} from '../../../styles/colors'
 /* STYLES - ACTIONS - OWN COMPONENTS END*/
 
 
@@ -114,7 +114,7 @@ const FilterScene = ({
   return (
     <>
       <LinearGradient 
-        colors={[SECONDARY,PRIMARY]} 
+        colors={[PRIMARY_LIGHT,PRIMARY_DARK]} 
         style={styles.gradient} 
         start={[1, 0.3]} 
         end={[0, 0.6]}
@@ -127,7 +127,7 @@ const FilterScene = ({
       <LinearGradient 
         end={[0, 0.6]}
         start={[1, .6]}
-        colors={[SECONDARY,PRIMARY]} 
+        colors={[PRIMARY_LIGHT,PRIMARY_DARK]} 
         style={{ flex: 1 }}
       >
         <View style={styles.contentWrapper}>

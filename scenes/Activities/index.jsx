@@ -11,7 +11,7 @@ import moment from 'moment';
 import actions from '../../redux/Auth/actions'
 
 /* ASSETS - OWN COMPONENTS */
-import { PRIMARY, SECONDARY } from '../../styles/colors'
+import { PRIMARY_DARK, PRIMARY_LIGHT } from '../../styles/colors'
 import ActivityItem from '../../components/ActivityItemHome'
 /*ASSETS - OWN COMPONENTS */
 
@@ -40,7 +40,7 @@ function ActivitiesScene({ navigation, data, filters, ...props }) {
   return (
     <>
       <LinearGradient 
-        colors={[SECONDARY,PRIMARY]} 
+        colors={[PRIMARY_LIGHT,PRIMARY_DARK]} 
         style={styles.gradient} 
         start={[1, 0.3]} 
         end={[0, 0.6]}
@@ -54,7 +54,7 @@ function ActivitiesScene({ navigation, data, filters, ...props }) {
       <LinearGradient 
         end={[0, 0.6]}
         start={[1, .6]}
-        colors={[SECONDARY,PRIMARY]} 
+        colors={[PRIMARY_LIGHT,PRIMARY_DARK]} 
       >
         <Container>
           {!_.isEmpty(props.transactions) ?

@@ -54,8 +54,6 @@ export function* loginRequest() {
     const response = yield call(login, formData)
 
     if(!response.error) {
-      yield alert(JSON.stringify(response.error))
-      
       yield put({
         type: actions.LOGIN_SUCCESS,
         payload: {
@@ -74,6 +72,7 @@ export function* loginRequest() {
   
 export function* loginSuccess() {
   yield takeLatest(actions.LOGIN_SUCCESS, function*({ payload }) {
+    console.log(actions.LOGIN_SUCCESS)
     try {
       yield AsyncStorage.setItem('@User:key', JSON.stringify(payload));
     } catch (error) {
@@ -269,6 +268,7 @@ export function* userRequest() {
 export function* checkAuthorization() {
   yield takeLatest(actions.CHECK_AUTHORIZATION, function*() {
     const data = yield AsyncStorage.getItem('@User:key');
+    console.log(data)
     if (data !== null) {
       const dataJson = JSON.parse(data)
       yield put({

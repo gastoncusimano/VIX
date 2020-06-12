@@ -90,26 +90,7 @@ function Home (props) {
           />
         }
         style={{ flex: 1, width: "100%"}} >
-        <HeaderHomeCharts data={linedata} navigation={props.navigation} />
-        { !_.isEmpty(props.profile.customer?.transactions) &&
-          <ContentCard header="Última Actividad" withIcon onPress={() => props.navigation.navigate("Movimientos")}>
-              {_.reverse(_.takeRight(props.profile.customer.transactions, 3)).map((data,i) => <ActivityItem key={i} {...mapper.dataTransactionToContentCard(data)} />)}
-          </ContentCard>
-        }
-
-        <ContentCard header="Descubrí Más" onPress={() => props.navigation.navigate("Activity")}>
-          {state.banners && 
-            <FlatList
-              style={{overflow: 'visible', borderRadius: 15, paddingVertical: 15}}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              data={state.banners}
-              ItemSeparatorComponent={() => <View style={{width: 12}}/>}
-              renderItem={(item) => <Item item={item.item} />}
-              keyExtractor={item => item.id}
-            />
-          }
-        </ContentCard>
+        
       </ScrollView>
     </View>
   )
