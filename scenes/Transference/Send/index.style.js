@@ -46,7 +46,6 @@ export const styles = StyleSheet.create({
   },
   card: {
     padding: 5,
-    marginRight: 10,
   },
   btnMore: {
     width: 35,
@@ -63,6 +62,12 @@ export const styles = StyleSheet.create({
     borderColor: "rgba(0,0,0,.15)", 
     marginVertical: 20,
     borderBottomWidth: 1, 
+  },
+  cardSelected: {
+    borderWidth: 1, 
+    borderColor: SECONDARY, 
+    marginRight: 10,
+    borderRadius: 10
   }
 })
 

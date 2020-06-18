@@ -26,16 +26,16 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "rgba(0,0,0,.05)",
     flexDirection: "row", 
-    borderBottomWidth: 1, 
+    borderBottomWidth: 1,
   },
   title: {
     color: 'black',
     fontSize: 16,
-    marginVertical: 0
+    marginVertical: 0,
   },
   paragraph: {
     color: "rgba(0,0,0,.3)",
     marginVertical: 0,
-    fontSize: 12
+    fontSize: 12,
   }
 })

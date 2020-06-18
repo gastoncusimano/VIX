@@ -53,8 +53,11 @@ class SendScene extends React.Component {
       name: '',
       number: '',
       alias: ''
-    }
+    },
+    originCard: {},
+    destinyCard: {}
   }
+  onSelectCard = (destiny, card) => this.setState({ ...this.state, [destiny]: card })
   toggleAddCard = () => this.setState({ ...this.state, addCard: true })
   onChangeCard = (field, value) => this.setState({ ...this.state, card: { ...this.state.card, [field]: value } })
   onChange = (value, fieldName) => this.setState({ ...this.state, [fieldName]: value })
@@ -64,7 +67,7 @@ class SendScene extends React.Component {
   render() {
     const { navigation, theme: { colors }, route: { params }, sendMoney } = this.props
     const handleAnimation = _.debounce(this.bounce, 200)
-
+    console.log(this.state.destinyCard)
     return (
       <>
         <LinearGradient
@@ -107,7 +110,15 @@ class SendScene extends React.Component {
                         id: '2',
                         alias: 'Tarjeta B'
                       }].map((card, i) => (
-                        <TouchableRipple key={i} onPress={() => { }} rippleColor="rgba(0,0,0,.25)" >
+                        <TouchableRipple 
+                          key={i} 
+                          style={[
+                            { alignSelf: 'flex-start', marginRight: 10 },
+                            (this.state.destinyCard.id === card.id) && styles.cardSelected,
+                          ]}
+                          onPress={() => this.onSelectCard('destinyCard', card)} 
+                          rippleColor="rgba(0,0,0,.25)"
+                        >
                           <View style={styles.card}>
                             <Image style={{ marginBottom: 5 }} source={require('../../../assets/icons/card.png')} />
                             <Text style={{ color: colors.subtitleText }}>{card.alias}</Text>
@@ -195,7 +206,15 @@ class SendScene extends React.Component {
                       id: '2',
                       alias: 'Tarjeta B'
                     }].map((card, i) => (
-                      <TouchableRipple key={i} onPress={() => { }} rippleColor="rgba(0,0,0,.25)" >
+                      <TouchableRipple 
+                        key={i} 
+                        style={[
+                          { alignSelf: 'flex-start', marginRight: 10 },
+                          (this.state.originCard.id === card.id) && styles.cardSelected,
+                        ]}
+                        onPress={() => this.onSelectCard('originCard', card)} 
+                        rippleColor="rgba(0,0,0,.25)"
+                      >
                         <View style={styles.card}>
                           <Image style={{ marginBottom: 5 }} source={require('../../../assets/icons/cardSolid.png')} />
                           <Text style={{ color: colors.subtitleText }}>{card.alias}</Text>
