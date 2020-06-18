@@ -20,12 +20,15 @@ function ActivitiesScene({ navigation, data, filters, ...props }) {
 
   const mapper = {
     dataTransactionToContentCard: (transaction) => {
+      let customer = transaction.related_transaction.customer
+      let initials = `${customer.first_name.charAt(0).toUpperCase()}${customer.second_name.charAt(0).toUpperCase()}`
       return {
+        initials,
+        date: moment(transaction.date).format('DD-MM-yyyy'),
+        title: `${customer.first_name} ${customer.second_name}`,
         value: transaction.amount,
         status: transaction.debit_or_credit === 'C' ? 'more' : 'less',
-        title: transaction.debit_or_credit === 'C' ? "Recibí dinero" : "Envié dinero",
         description: transaction.debit_or_credit === 'C' ? 'Crédito' : "Débito",
-        date: moment(transaction.date).format('DD-MM-yyyy')
       }
     }
   }
@@ -36,7 +39,7 @@ function ActivitiesScene({ navigation, data, filters, ...props }) {
     setRefreshing(false)
   }
 
-  
+  console.log(props.transactions)
   return (
     <>
       <LinearGradient 
@@ -47,7 +50,7 @@ function ActivitiesScene({ navigation, data, filters, ...props }) {
       >
         <Appbar.Header style={{ elevation: 0, backgroundColor: "#00000000" }} >
           <Appbar.BackAction onPress={navigation.goBack} />
-          <Appbar.Content titleStyle={{ fontSize: 18, paddingLeft: '22%' }} title="Movimientos" />
+          <Appbar.Content titleStyle={{ fontSize: 18, paddingLeft: '15%' }} title="Última Actividad" />
           <Appbar.Action icon="tune" onPress={() => navigation.push("Filtros")} />
         </Appbar.Header>
       </LinearGradient>

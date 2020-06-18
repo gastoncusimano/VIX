@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import * as Animatable from 'react-native-animatable'
-import { View, FlatList } from 'react-native'
+import { View, FlatList,Image, TextInput } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Appbar, Searchbar, Title, Text, Avatar, withTheme, TouchableRipple } from 'react-native-paper'
+import { Appbar, Title, Text, Avatar, withTheme, TouchableRipple } from 'react-native-paper'
+import { Feather, AntDesign, FontAwesome } from '@expo/vector-icons'; 
 
 
 /* STYLES - ACTIONS - OWN COMPONENTS */
@@ -14,7 +15,7 @@ import {
   Container 
 } from './index.style'
 import actions from '../../redux/Contacts/actions'
-import { PRIMARY, SECONDARY } from '../../styles/colors'
+import { PRIMARY, SECONDARY, PRIMARY_DARK, PRIMARY_LIGHT } from '../../styles/colors'
 /* STYLES - ACTIONS - OWN COMPONENTS END*/
 
 
@@ -33,8 +34,8 @@ const ContactItem = ({ title, subtitle, image, colors, _numberVerification}) => 
             <Avatar.Icon 
               icon="account" 
               size={50} 
-              color={colors.accent}
-              style={[styles.avatarIcon, { borderColor: "rgba(255,111,31,.25)" }]} 
+              color={SECONDARY}
+              style={[styles.avatarIcon, { borderColor: "#cccccc55" }]} 
             />
           )
         }
@@ -51,12 +52,10 @@ const ContactItem = ({ title, subtitle, image, colors, _numberVerification}) => 
 } 
 
 function TransferScene({ 
-  page,
+  profile,
   theme: { colors }, 
   contacts, 
   navigation, 
-  changePage,
-  nextPaging,
   getContacts, 
 }) {
   const [state, setState] = useState({ query: "", searcheable: false })
@@ -65,7 +64,6 @@ function TransferScene({
   const _handleSearchActive = () => setState({ ...state, searcheable: !state.searcheable })
   const handleNavigate = _.debounce(navigationToView, 180)
 
-  const getItemLayout = (data, index) => ({length: 50, offset: 50 * index, index})
   const _numberVerification = (object) => {
     let number = object.phoneNumbers[0].number.replace(/\s/g , "").replace(/-/g, "")
     fetch(`https://api.ityou.works/user-phones/validate?phone=${number}`, {
@@ -76,70 +74,87 @@ function TransferScene({
     })
     .then(function(response) {
       let exists = response.data[0].exists
-      if (exists) {
-        handleNavigate("SendMoney", { user: object, numberParsed: number})
-      } else {
-        handleNavigate("NoFound", { user: object })
-      }
+      handleNavigate("SendMoney", { user: object, numberParsed: number, exists})
+      // if (exists) {
+      // } else {
+      //   handleNavigate("NoFound", { user: object })
+      // }
     });
   }
   const filterContacts = (query) => {
     return query 
-      ? contacts.filter((data) => data.name.indexOf(query) > -1 ) 
-      : contacts
+      ? contacts.contacts.filter((data) => data.name.indexOf(query) > -1 ) 
+      : contacts.contacts
   }
 
   useEffect(() => {
-    if(nextPaging)
-      getContacts(page)
-  }, [page])
-  
+      getContacts()
+  },[])
+
   return (
     <>
       <LinearGradient 
-        colors={[SECONDARY,PRIMARY]} 
+        colors={[PRIMARY_LIGHT,PRIMARY_DARK]} 
         style={styles.gradient} 
         start={[1, 0.3]} 
         end={[0, 0.6]}
       >
         <Appbar.Header style={{ elevation: 0, backgroundColor: "#00000000" }}>
-          {!state.searcheable ? (
-            <>
-              <Appbar.BackAction onPress={navigation.goBack} color="white" />
-              <Appbar.Content titleStyle={{ fontSize: 18, paddingLeft: '25%' }} title="Transferencia" />
-              <Appbar.Action icon="magnify" color="white" onPress={_handleSearchActive} />
-            </>
-          ) : (
-            <Animatable.View animation="slideInRight" duration={500} style={{flex: 1  }}>
-              <Searchbar
-                icon="arrow-left"
-                value={state.query}
-                theme={{ colors: { text: colors.darkText } }}
-                iconColor={colors.darkText}
-                inputStyle={{ fontSize: 16 }}
-                placeholder="Ingrese un nombre o telefono"
-                onIconPress={_handleSearchActive}
-                onChangeText={_handleSearch}
-                placeholderTextColor={colors.subtitleText}
-              />
-            </Animatable.View>
-          )}
+          <View style={styles.welcomeText}>
+            <Text style={{ color: "white", fontSize: 22 }}>
+              Bienvenido{"\n"}
+              <Text
+                style={{ fontWeight: "bold", color: '#ffac00' }}
+              >{`${profile.customer?.name} ${profile.customer?.last_name}`}</Text>
+            </Text>
+          </View>
+          <TouchableRipple  onPress={() => {navigation.openDrawer();}} style={styles.circleBell}>
+            <Feather name="menu" size={32} color="white" />
+          </TouchableRipple>
+          
         </Appbar.Header>
       </LinearGradient>
       <LinearGradient 
         end={[0, 0.6]}
         start={[1, .6]}
-        colors={[SECONDARY,PRIMARY]} 
+        colors={[PRIMARY_LIGHT,PRIMARY_DARK]} 
       >
         <Container>
+          <Text style={{fontSize: 18, textAlign: 'center', color: 'black', paddingHorizontal: 15}}>Selecciona a quien enviar dinero</Text>
+          <View style={styles.searchInput}>
+            <AntDesign name="search1" color='rgba(0,0,0, 0.4)' size={22} style={{paddingTop: 10, marginLeft: 10}} />
+            <TextInput
+                placeholderTextColor="rgba(0,0,0, 0.4)"
+                style={{ height: 25, borderColor: 'transparent', fontFamily: 'montserrat', paddingHorizontal: 10, color: "rgba(0,0,0, 0.4)", marginVertical: 8, flex: 1}}
+                onChangeText={text => setState({...state, q: text})}
+                placeholder={"Ingrese nombre o número"}
+                value={state.q}
+            />
+            <TouchableRipple onPress={() => navigation.goBack()}>
+                <FontAwesome name="times-circle" color='rgba(0,0,0, 0.2)' size={15} style={{paddingTop: 13, marginRight: 15}} />
+            </TouchableRipple>
+            </View>
           <FlatList
             data={filterContacts(state.query)}
             ListHeaderComponent={() => (
-              <View style={{ paddingHorizontal: 15 }}>
-                <Title style={{ color: colors.subtitleText, marginVertical: 0, marginBottom: 10 }} >Contactos</Title>
-              </View>
+              <TouchableRipple 
+                rippleColor="rgba(0,0,0,.15)" 
+                style={{...styles.contactItem, marginVertical: 10}}
+                onPress={() => {}}
+              >
+                <>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View style={styles.circleQuick}>
+                      <Image  source={require('../../assets/cardNew.png')}/>
+                    </View>      
+                    <View style={{marginEnd: 130}}>
+                        <Title style={{ color: colors.darkText, fontSize: 16, marginVertical: 0 }} > Nro de tarjeta</Title>
+                        <Text style={{ color: colors.subtitleText, marginLeft: 5 }} >Elegí esta opción si el destinatario no está en tus contactos</Text>
+                    </View>
+                  </View>
+                </>
+              </TouchableRipple>
             )}
-            initialNumToRender={10}
             renderItem={({ item }) => (
               <ContactItem 
                 title={item.name} 
@@ -150,18 +165,15 @@ function TransferScene({
               />
             )}
             keyExtractor={item => item.id}
-            onEndReached={changePage}
-            getItemLayout={getItemLayout}
-            maxToRenderPerBatch={10}
-            onEndReachedThreshold={0.1}
           />
         </Container>
-      </LinearGradient>
+      </LinearGradient> 
     </>
   );
 }
 
-export default connect(state => ({ ...state.Contacts }),{
+export default connect(state => ({  profile: state.Auth.profile,
+  contacts: {...state.Contacts}}),{
   changePage: actions.changePage,
   getContacts: actions.getContacts,
 })(

@@ -17,8 +17,8 @@ export function* contactsRequest() {
           Contacts.Fields.Image,
           Contacts.Fields.PhoneNumbers,
         ],
-        pageSize: 40,
-        pageOffset: 40 * page
+        // pageSize: data.length,
+        // pageOffset: 40 * page
       })
 
       if (data.length > 0) {

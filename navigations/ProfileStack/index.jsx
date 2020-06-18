@@ -17,7 +17,6 @@ export default function(props) {
       headerMode="screen"
       initialRouteName="Profile"
     >
-      <Stack.Screen name="Camera" component={Camera}/>
       <Stack.Screen name="Profile" component={Profile}/>
       <Stack.Screen name="PersonalData" component={PersonalData}/>
     </Stack.Navigator>

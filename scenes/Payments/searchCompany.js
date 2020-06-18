@@ -174,7 +174,6 @@ class Payments extends React.Component {
                         onChangeText={text => this.setState({...this.state, q: text})}
                         placeholder={"Buscar"}
                         value={this.state.q}
-                        autoFocus
                     />
                     <TouchableRipple onPress={() => navigation.goBack()}>
                         <FontAwesome name="times-circle" color='rgba(0,0,0, 0.2)' size={15} style={{paddingTop: 13, marginRight: 15}} />

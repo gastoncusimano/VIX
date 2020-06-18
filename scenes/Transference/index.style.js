@@ -14,7 +14,36 @@ export const styles = StyleSheet.create({
     marginRight: 10, 
     borderWidth: 1,
     backgroundColor: "#FFF",
-  }
+  },
+  circleQuick: {
+    backgroundColor: '#ffac00',
+    width: 50,
+    marginRight: 10,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50,
+    paddingHorizontal: 15,
+   },
+   searchInput: {
+    zIndex: 10,
+    flexDirection: 'row',
+    borderRadius: 25,
+    backgroundColor: "#F7F7F7",
+    marginVertical: 18,
+    marginHorizontal: 15,
+  },
+  welcomeText: {
+    position: 'absolute',
+    left: 24
+  },
+  circleBell: {
+    position: 'absolute',
+    right: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50
+  },
 })
 
 export const Container = styled.View`

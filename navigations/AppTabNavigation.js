@@ -12,11 +12,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Text, withTheme } from "react-native-paper";
 import Home from "../scenes/HomePage";
 import * as _ from 'lodash'
+import InsertCard from '../scenes/InsertCard'
+import Camera from '../scenes/Camera'
 import CashInStack from "./CashInStack";
-import ActivitiesStack from "./ActivitiesStack";
-import TransferenceStack from "./TransferStack";
 import PaymentStack from "./PaymentStack";
 import ProfileStack from "./ProfileStack";
+import ActivitiesStack from "./ActivitiesStack";
+import TransferenceStack from "./TransferStack";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Feather } from '@expo/vector-icons'; 
@@ -89,10 +91,12 @@ function HomeNavigation() {
       headerMode="screen"
     >
       <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ title: "Gollet" }}
+        name="TransferenceStack"
+        component={TransferenceStack}
+        options={{ title: "" }}
       />
+      <Stack.Screen name="Camera" component={Camera}/>
+      <Stack.Screen name="InsertCard" component={InsertCard}/>
       <Stack.Screen
         name="Movimientos"
         component={ActivitiesStack}
@@ -136,52 +140,7 @@ function ProfileNavigation() {
 
 function App() {
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconSource;
-
-          if (route.name === "Home") {
-            iconSource = focused
-              ? require("../assets/icons/tab/home_active.png")
-              : require("../assets/icons/tab/home.png");
-          } else if (route.name === "CashIn") {
-            iconSource = focused
-              ? require("../assets/icons/tab/cargar_dinero_active.png")
-              : require("../assets/icons/tab/cargar_dinero_menu.png");
-          } else if (route.name === "Transfer") {
-            iconSource = focused
-              ? require("../assets/icons/tab/transferir_active.png")
-              : require("../assets/icons/tab/transferir_menu.png");
-          } else if (route.name === "Profile") {
-            iconSource = focused
-              ? require("../assets/icons/tab/user_active.png")
-              : require("../assets/icons/tab/user.png");
-          }
-
-          return <Image source={iconSource} />;
-        },
-        tabBarVisible: route.name === "Scanner" ? false : true,
-      })}
-      tabBarOptions={{
-        activeTintColor: "red",
-        inactiveTintColor: "#BEBEBE",
-        activeBackgroundColor: "#fff",
-        inactiveBackgroundColor: "#fff",
-        showLabel: false,
-        keyboardHidesTabBar: true,
-        style: {
-          borderTopColor: "#fff",
-          backgroundColor: "#fff",
-          paddingBottom: 0,
-        },
-      }}
-    >
-      <Tab.Screen name="Home" component={HomeNavigation} />
-      <Tab.Screen name="Transfer" component={TransferenceStack} />
-      <Tab.Screen name="CashIn" component={CashInStack} />
-      <Tab.Screen name="Profile" component={ProfileStack} />
-    </Tab.Navigator>
+    <HomeNavigation/>
   );
 }
 
