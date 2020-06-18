@@ -24,7 +24,15 @@ const ActivityItem = ({ status, value, title, description, date, initials }) => 
         {/* <Paragraph style={styles.paragraph} >{description}</Paragraph> */}
       </View>
       <View style={{alignItems: "flex-end"}}>
-        <NumberFormat value={value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale prefix={'$ '} renderText={value => <Amount type={name}>{value}</Amount>} />
+        <NumberFormat 
+          value={value} 
+          renderText={value => <Amount type={name}>{value}</Amount>} 
+          displayType={'text'} 
+          decimalScale={2} 
+          decimalSeparator={','} 
+          thousandSeparator={'.'} 
+          fixedDecimalScale prefix={'$ '} 
+        />
         <Paragraph style={styles.paragraph} >{date}</Paragraph>
       </View>
     </Animatable.View>

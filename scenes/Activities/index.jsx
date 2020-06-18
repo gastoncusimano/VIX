@@ -1,11 +1,11 @@
+import _ from 'lodash';
+import moment from 'moment';
 import { connect } from 'react-redux'
 import React, { useState } from 'react'
 import { FlatList, RefreshControl } from 'react-native'
 import { Appbar, Text } from 'react-native-paper'
 import { styles, Container } from './index.style'
 import { LinearGradient } from 'expo-linear-gradient'
-import * as _ from 'lodash';
-import moment from 'moment';
 
 
 import actions from '../../redux/Auth/actions'
@@ -39,7 +39,6 @@ function ActivitiesScene({ navigation, data, filters, ...props }) {
     setRefreshing(false)
   }
 
-  console.log(props.transactions)
   return (
     <>
       <LinearGradient 
@@ -81,6 +80,8 @@ function ActivitiesScene({ navigation, data, filters, ...props }) {
 }
 
 export default connect(state => ({
-   transactions: !_.isEmpty(state.Auth.profile.customer?.transactions) ? state.Auth.profile.customer?.transactions :  [],
-   token: state.Auth.idToken}),
-  {fetchUser: actions.fetchUser})(ActivitiesScene)
+  transactions: !_.isEmpty(state.Auth.profile.customer?.transactions) ? state.Auth.profile.customer?.transactions :  [],
+  token: state.Auth.idToken,
+  filters: state.Activities.filters,
+}),
+{fetchUser: actions.fetchUser})(ActivitiesScene)
