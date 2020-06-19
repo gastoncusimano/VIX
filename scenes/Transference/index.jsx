@@ -7,7 +7,7 @@ import { View, FlatList,Image, TextInput } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Appbar, Title, Text, Avatar, withTheme, TouchableRipple } from 'react-native-paper'
 import { Feather, AntDesign, FontAwesome } from '@expo/vector-icons'; 
-
+import QuickActions from '../../components/QuickActions/index'
 
 /* STYLES - ACTIONS - OWN COMPONENTS */
 import { 
@@ -62,7 +62,7 @@ function TransferScene({
   const _handleSearch = (query) => setState({ ...state, query })
   const navigationToView = (path, props) => navigation.push(path, { ...props })
   const _handleSearchActive = () => setState({ ...state, searcheable: !state.searcheable })
-  const handleNavigate = _.debounce(navigationToView, 180)
+  const handleNavigate = _.debounce(navigationToView, 80)
 
   const _numberVerification = (object) => {
     let number = object.phoneNumbers[0].number.replace(/\s/g , "").replace(/-/g, "")
@@ -99,7 +99,7 @@ function TransferScene({
         start={[1, 0.3]} 
         end={[0, 0.6]}
       >
-        <Appbar.Header style={{ elevation: 0, backgroundColor: "#00000000" }}>
+        <Appbar.Header style={{ elevation: 0, height: 180, backgroundColor: "#00000000" }}>
           <View style={styles.welcomeText}>
             <Text style={{ color: "white", fontSize: 22 }}>
               Bienvenido{"\n"}
@@ -111,6 +111,11 @@ function TransferScene({
           <TouchableRipple  onPress={() => {navigation.openDrawer();}} style={styles.circleBell}>
             <Feather name="menu" size={32} color="white" />
           </TouchableRipple>
+
+          {/* Quick Actions*/}
+          <View style={{position: 'absolute', bottom: -15}}>
+            <QuickActions/>
+          </View>
           
         </Appbar.Header>
       </LinearGradient>
@@ -120,19 +125,19 @@ function TransferScene({
         colors={[PRIMARY_LIGHT,PRIMARY_DARK]} 
       >
         <Container>
-          <Text style={{fontSize: 18, textAlign: 'center', color: 'black', paddingHorizontal: 15}}>Selecciona a quien enviar dinero</Text>
+          <Text style={{fontSize: 18, color: 'black', paddingHorizontal: 20}}>Selecciona a quien deseas enviarle dinero</Text>
           <View style={styles.searchInput}>
             <AntDesign name="search1" color='rgba(0,0,0, 0.4)' size={22} style={{paddingTop: 10, marginLeft: 10}} />
             <TextInput
                 placeholderTextColor="rgba(0,0,0, 0.4)"
                 style={{ height: 25, borderColor: 'transparent', fontFamily: 'montserrat', paddingHorizontal: 10, color: "rgba(0,0,0, 0.4)", marginVertical: 8, flex: 1}}
-                onChangeText={text => setState({...state, q: text})}
+                onChangeText={text => _handleSearch(text)}
                 placeholder={"Ingrese nombre o número"}
                 value={state.q}
             />
-            <TouchableRipple onPress={() => navigation.goBack()}>
+            {/* <TouchableRipple onPress={() => _handleSearch("")}>
                 <FontAwesome name="times-circle" color='rgba(0,0,0, 0.2)' size={15} style={{paddingTop: 13, marginRight: 15}} />
-            </TouchableRipple>
+            </TouchableRipple> */}
             </View>
           <FlatList
             data={filterContacts(state.query)}

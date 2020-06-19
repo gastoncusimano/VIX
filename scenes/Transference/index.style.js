@@ -34,12 +34,14 @@ export const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   welcomeText: {
+    top: 0,
     position: 'absolute',
     left: 24
   },
   circleBell: {
     position: 'absolute',
     right: 22,
+    top: 10,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 50

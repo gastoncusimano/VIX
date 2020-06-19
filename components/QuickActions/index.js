@@ -8,34 +8,34 @@ import { Text, withTheme } from 'react-native-paper';
 
 function QuickActions(props) {
   return (
-    <View style={{flexDirection: 'row', marginHorizontal: 20, backgroundColor: '#333', borderRadius: 15, marginTop: -35, elevation: 3, zIndex: 8, paddingHorizontal: 10, paddingVertical: 20, justifyContent: 'center', marginBottom: 10, minHeight: 90}}>
-      <TouchableWithoutFeedback  onPress={() => props.navigation.navigate("Transference")}>
+    <View style={{flexDirection: 'row', marginHorizontal: 10, alignItems: 'center', borderRadius: 15, width: '100%',  zIndex: 8, paddingHorizontal: 10, paddingVertical: 20, justifyContent: 'center', marginBottom: 10, minHeight: 90}}>
+      <TouchableWithoutFeedback  onPress={() => {}}>
         <View style={{justifyContent: 'center', alignItems: 'center', flexGrow: 1}}>
           <View style={styles.circleQuick}>
-            <Image source={require('../../assets/icons/transferir.png')}/>
+            <Image source={require('../../assets/solicitardinero.png')}/>
           </View>      
           <Text style={styles.textQuick}>
-            Transferir
+            SOLICITAR{"\n"}DINERO
           </Text>
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => props.navigation.navigate("CashIn")}>
         <View style={{justifyContent: 'center', alignItems: 'center', flexGrow: 1}}>
           <View style={styles.circleQuick}>
-            <Image  source={require('../../assets/icons/cargar_dinero.png')}/>
+            <Image  source={require('../../assets/ultimosmovimientos.png')}/>
           </View>      
           <Text style={styles.textQuick}>
-            Cargar Dinero
+            ÚLTIMOS{"\n"}MOVIMIENTOS
           </Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => props.navigation.navigate("Payments")}>
+      <TouchableWithoutFeedback onPress={() => {}}>
         <View style={{justifyContent: 'center', alignItems: 'center', flexGrow: 1}}>
           <View style={styles.circleQuick}>
-            <Image  source={require('../../assets/icons/pagos.png')}/>
+            <Image  source={require('../../assets/misvisas.png')}/>
           </View>      
           <Text style={styles.textQuick}>
-            Pagos
+            MIS VISA
           </Text>
         </View>
       </TouchableWithoutFeedback>
@@ -46,8 +46,8 @@ export default withTheme(QuickActions)
 
 const styles = StyleSheet.create({
  circleQuick: {
-  backgroundColor: '#f60900',
   width: 50,
+  paddingHorizontal: 50,
   height: 50,
   alignItems: 'center',
   justifyContent: 'center',
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
  textQuick: {
   marginTop: 10,
   fontSize: 12,
-  color: 'white'
+  color: 'white',
+  textAlign: 'center'
  }
 });
