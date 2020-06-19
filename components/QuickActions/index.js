@@ -19,7 +19,7 @@ function QuickActions(props) {
           </Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => props.navigation.navigate("CashIn")}>
+      <TouchableWithoutFeedback onPress={() => props.navigation.navigate("Movimientos")}>
         <View style={{justifyContent: 'center', alignItems: 'center', flexGrow: 1}}>
           <View style={styles.circleQuick}>
             <Image  source={require('../../assets/ultimosmovimientos.png')}/>
@@ -29,7 +29,7 @@ function QuickActions(props) {
           </Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => {}}>
+      <TouchableWithoutFeedback onPress={() => props.navigation.navigate("Cards")}>
         <View style={{justifyContent: 'center', alignItems: 'center', flexGrow: 1}}>
           <View style={styles.circleQuick}>
             <Image  source={require('../../assets/misvisas.png')}/>

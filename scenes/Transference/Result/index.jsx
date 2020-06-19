@@ -4,7 +4,7 @@
   import { Appbar, Button, withTheme, Title } from 'react-native-paper'
   
   /* STYLES */
-  import { PRIMARY, SECONDARY } from '../../../styles/colors'
+  import { PRIMARY_LIGHT,PRIMARY_DARK } from '../../../styles/colors'
   import { Container, styles } from './index.style'
   /* STYLES END*/
   
@@ -18,7 +18,7 @@
     return (
       <>
         <LinearGradient 
-          colors={[SECONDARY,PRIMARY]} 
+          colors={[PRIMARY_LIGHT,PRIMARY_DARK]} 
           style={styles.gradient} 
           start={[1, 0.3]} 
           end={[0, 0.6]}
@@ -30,7 +30,7 @@
         <LinearGradient 
           end={[0, 0.6]}
           start={[1, .6]}
-          colors={[SECONDARY,PRIMARY]} 
+          colors={[PRIMARY_LIGHT,PRIMARY_DARK]} 
           style={{ flex: 1 }}
         >
           <Container>

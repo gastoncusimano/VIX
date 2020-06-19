@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 
 /* STYLES */
 import { styles, Container } from './index.style'
-import { PRIMARY, SECONDARY } from '../../../styles/colors'
+import { PRIMARY_LIGHT,PRIMARY_DARK } from '../../../styles/colors'
 /* STYLES */
 
 const ContactItem = ({ title, subtitle, image, colors }) => {
@@ -71,7 +71,7 @@ class SendScene extends React.Component {
     return (
       <>
         <LinearGradient
-          colors={[SECONDARY, PRIMARY]}
+          colors={[PRIMARY_LIGHT,PRIMARY_DARK]}
           style={styles.gradient}
           start={[1, 0.3]}
           end={[0, 0.6]}
@@ -84,7 +84,7 @@ class SendScene extends React.Component {
         <LinearGradient
           end={[0, 0.6]}
           start={[1, .6]}
-          colors={[SECONDARY, PRIMARY]}
+          colors={[PRIMARY_LIGHT,PRIMARY_DARK]}
           style={{ flex: 1 }}
         >
           <View style={styles.wrapper}>

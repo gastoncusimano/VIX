@@ -21,7 +21,7 @@ function ActivitiesScene({ navigation, data, filters, ...props }) {
   const mapper = {
     dataTransactionToContentCard: (transaction) => {
       let customer = transaction.related_transaction.customer
-      let initials = `${customer.first_name.charAt(0).toUpperCase()}${customer.second_name.charAt(0).toUpperCase()}`
+      let initials = `${ customer.first_name ? customer.first_name.charAt(0).toUpperCase() : 'N'}${customer.second_name ? customer.second_name.charAt(0).toUpperCase() : "N"}`
       return {
         initials,
         date: moment(transaction.date).format('DD-MM-yyyy'),

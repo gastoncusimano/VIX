@@ -16,6 +16,7 @@ import InsertCard from '../scenes/InsertCard'
 import Camera from '../scenes/Camera'
 import CashInStack from "./CashInStack";
 import PaymentStack from "./PaymentStack";
+import CardsStack from "./CardsStack";
 import ProfileStack from "./ProfileStack";
 import ActivitiesStack from "./ActivitiesStack";
 import TransferenceStack from "./TransferStack";
@@ -114,6 +115,12 @@ function HomeNavigation() {
         component={PaymentStack}
         title=""
         options={{ headerTitle: "CashIn" }}
+      />
+       <Stack.Screen
+        name="Cards"
+        component={CardsStack}
+        title=""
+        options={{ headerTitle: "Cards" }}
       />
       <Stack.Screen
         name="Transference"

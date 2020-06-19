@@ -88,7 +88,9 @@ function TransferScene({
   }
 
   useEffect(() => {
+    if (_.isEmpty(contacts.contacts)) {
       getContacts()
+    }
   },[])
 
   return (
@@ -114,7 +116,7 @@ function TransferScene({
 
           {/* Quick Actions*/}
           <View style={{position: 'absolute', bottom: -15}}>
-            <QuickActions/>
+            <QuickActions navigation={navigation}/>
           </View>
           
         </Appbar.Header>
@@ -140,6 +142,7 @@ function TransferScene({
             </TouchableRipple> */}
             </View>
           <FlatList
+            style={{maxHeight: '70%'}}
             data={filterContacts(state.query)}
             ListHeaderComponent={() => (
               <TouchableRipple 
