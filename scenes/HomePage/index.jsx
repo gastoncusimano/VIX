@@ -73,8 +73,9 @@ function Home ({
     .then(function(response) {
       return response.json();
     })
-    .then(function(response) {
+    .then(function(response) {  
       let exists = response.data[0].exists
+      
       handleNavigate("SendMoney", { user: object, numberParsed: number, exists})
       // if (exists) {
       // } else {

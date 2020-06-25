@@ -57,17 +57,48 @@ class SendScene extends React.Component {
     originCard: {},
     destinyCard: {}
   }
+  
   onSelectCard = (destiny, card) => this.setState({ ...this.state, [destiny]: card })
-  toggleAddCard = () => this.setState({ ...this.state, addCard: true })
   onChangeCard = (field, value) => this.setState({ ...this.state, card: { ...this.state.card, [field]: value } })
+  toggleAddCard = () => this.setState({ ...this.state, addCard: true })
+  bounce = () => this.view.bounceIn(800).then(endState => console.log(endState.finished ? 'bounce finished' : 'bounce cancelled'));
   onChange = (value, fieldName) => this.setState({ ...this.state, [fieldName]: value })
   handleViewRef = ref => this.view = ref
-  bounce = () => this.view.bounceIn(800).then(endState => console.log(endState.finished ? 'bounce finished' : 'bounce cancelled'));
+
+  onSubmit = () => {
+    let payload = {}
+
+    if(_.isEmpty(this.state.destinyCard) && !_.isEmpty(this.state.card)) {
+      payload = {
+        contact: {
+          name: this.props.route.params.user.name
+        },
+        card: {
+          reference: this.state.card.alias,
+          card_number: this.state.card.number,
+          card_holder_name: this.state.card.name,
+        },
+        amount: this.state.ammount
+      }
+    } else {
+      payload = {
+        contact: {
+          name: this.props.route.params.user.name
+        },
+        card: {
+          card: this.state.destinyCard.id
+        },
+        amount: this.state.ammount
+      }
+    }
+
+    this.props.sendMoney(payload, this.props.navigation)
+  }
 
   render() {
     const { navigation, theme: { colors }, route: { params }, sendMoney } = this.props
     const handleAnimation = _.debounce(this.bounce, 200)
-    console.log(this.state.destinyCard)
+
     return (
       <>
         <LinearGradient
@@ -103,13 +134,7 @@ class SendScene extends React.Component {
                   </View>
                   <ScrollView contentContainerStyle={styles.cardContainer} horizontal >
                     <>
-                      {[{
-                        id: '1',
-                        alias: 'Tarjeta A'
-                      }, {
-                        id: '2',
-                        alias: 'Tarjeta B'
-                      }].map((card, i) => (
+                      {params.user.cards.map((card, i) => (
                         <TouchableRipple 
                           key={i} 
                           style={[
@@ -199,13 +224,7 @@ class SendScene extends React.Component {
                 </View>
                 <ScrollView contentContainerStyle={styles.cardContainer} horizontal >
                   <>
-                    {[{
-                      id: '1',
-                      alias: 'Tarjeta A'
-                    }, {
-                      id: '2',
-                      alias: 'Tarjeta B'
-                    }].map((card, i) => (
+                    {this.props.cards.map((card, i) => (
                       <TouchableRipple 
                         key={i} 
                         style={[
@@ -217,11 +236,15 @@ class SendScene extends React.Component {
                       >
                         <View style={styles.card}>
                           <Image style={{ marginBottom: 5 }} source={require('../../../assets/icons/cardSolid.png')} />
-                          <Text style={{ color: colors.subtitleText }}>{card.alias}</Text>
+                          <Text style={{ color: colors.subtitleText }}>{card.reference}</Text>
                         </View>
                       </TouchableRipple>
                     ))}
-                    <TouchableRipple style={{ width: 70, alignItems: 'center', padding: 5 }} onPress={() => navigation.push('InsertCard')} rippleColor="rgba(0,0,0,.25)">
+                    <TouchableRipple 
+                      style={{ width: 70, alignItems: 'center', padding: 5 }} 
+                      onPress={() => navigation.push('InsertCard')} 
+                      rippleColor="rgba(0,0,0,.25)"
+                    >
                       <>
                         <View style={styles.btnMore}>
                           <Ionicons name="ios-add" size={20} color="#FFF" />
@@ -234,7 +257,7 @@ class SendScene extends React.Component {
               </View>
               <Button
                 mode="contained"
-                onPress={() => sendMoney(params.numberParsed, this.state.ammount, navigation)}
+                onPress={this.onSubmit}
                 theme={{ colors: { primary: colors.accent } }}
                 style={{ width: "100%", marginTop: 10 }}
                 labelStyle={{ color: colors.text }}>
@@ -248,5 +271,7 @@ class SendScene extends React.Component {
   }
 }
 
-export default connect(state => ({}), { sendMoney: actions.sendMoney })(withTheme(SendScene))
+export default connect(state => ({
+  cards: state.InsertCard.cards
+}), { sendMoney: actions.sendCardToCard })(withTheme(SendScene))
 
