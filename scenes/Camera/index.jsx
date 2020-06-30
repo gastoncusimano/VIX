@@ -45,6 +45,7 @@ function CameraScene(props) {
         ref={ref => setCameraRef(ref)} 
         style={{ flex: 1 }} 
         type={type}
+        ratio={'16:9'}
         flashMode={flash}
       >
         <View 
@@ -54,7 +55,7 @@ function CameraScene(props) {
             flexDirection: 'row',
             justifyContent: 'flex-end',
             backgroundColor: 'transparent',
-            paddingVertical: 30,
+            paddingVertical: 50,
             paddingHorizontal: 20
           }}
         >

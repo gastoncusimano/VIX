@@ -67,7 +67,7 @@ const HeaderScreen = ({ scene, navigation, previous, profile }) => {
         </View>
         <View style={styles.welcomeText}>
           <Text style={{ color: "white", fontSize: 22 }}>
-            Bienvenido{"\n"}
+            Hola{"\n"}
             <Text
               style={{ fontWeight: "bold", color: '#ffac00' }}
             >{`${profile.customer?.name} ${profile.customer?.last_name}`}</Text>

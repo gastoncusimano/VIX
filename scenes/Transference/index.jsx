@@ -104,7 +104,7 @@ function TransferScene({
         <Appbar.Header style={{ elevation: 0, height: 180, backgroundColor: "#00000000" }}>
           <View style={styles.welcomeText}>
             <Text style={{ color: "white", fontSize: 22 }}>
-              Bienvenido{"\n"}
+              Hola{"\n"}
               <Text
                 style={{ fontWeight: "bold", color: '#ffac00' }}
               >{`${profile.customer?.name} ${profile.customer?.last_name}`}</Text>
@@ -115,10 +115,9 @@ function TransferScene({
           </TouchableRipple>
 
           {/* Quick Actions*/}
-          <View style={{position: 'absolute', bottom: -15}}>
+          <View style={{position: 'absolute', bottom: -15, justifyContent: 'center',  width: '100%'}}>
             <QuickActions navigation={navigation}/>
           </View>
-          
         </Appbar.Header>
       </LinearGradient>
       <LinearGradient 
