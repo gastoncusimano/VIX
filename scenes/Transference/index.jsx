@@ -15,6 +15,7 @@ import {
   Container 
 } from './index.style'
 import actions from '../../redux/Contacts/actions'
+import transferActions from '../../redux/Transfer/actions'
 import { PRIMARY, SECONDARY, PRIMARY_DARK, PRIMARY_LIGHT } from '../../styles/colors'
 /* STYLES - ACTIONS - OWN COMPONENTS END*/
 
@@ -57,6 +58,7 @@ function TransferScene({
   contacts, 
   navigation, 
   getContacts, 
+  cardsRequest,
 }) {
   const [state, setState] = useState({ query: "", searcheable: false })
   const _handleSearch = (query) => setState({ ...state, query })
@@ -74,7 +76,8 @@ function TransferScene({
     })
     .then(function(response) {
       let exists = response.data[0].exists
-      handleNavigate("SendMoney", { user: object, numberParsed: number, exists})
+
+      handleNavigate("SendMoney", { user: {...object, ...response.data[1]}, numberParsed: number, exists})
       // if (exists) {
       // } else {
       //   handleNavigate("NoFound", { user: object })
@@ -90,6 +93,7 @@ function TransferScene({
   useEffect(() => {
     if (_.isEmpty(contacts.contacts)) {
       getContacts()
+      cardsRequest()
     }
   },[])
 
@@ -179,10 +183,13 @@ function TransferScene({
   );
 }
 
-export default connect(state => ({  profile: state.Auth.profile,
-  contacts: {...state.Contacts}}),{
+export default connect(state => ({  
+  profile: state.Auth.profile,
+  contacts: {...state.Contacts}
+}),{
   changePage: actions.changePage,
   getContacts: actions.getContacts,
+  cardsRequest: transferActions.cardsRequest
 })(
   withTheme(TransferScene)
 )

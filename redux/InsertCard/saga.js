@@ -21,7 +21,7 @@ function* createCardRequest() {
   yield takeLatest(actions.CREATE_CARD_REQUEST, function*({ payload, navigation }) {
     const { Auth } = store.getState()
     const response = yield call(createCard, {body: payload, token: Auth.idToken})
-    
+
     if(!response.error) {
       yield put({
         type: actions.CREATE_CARD_SUCCESS,

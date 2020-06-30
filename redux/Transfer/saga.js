@@ -6,14 +6,21 @@ import actions from './actions'
 import { store } from '../store'
 
 const sendMoney = ({token, body}) =>
-  fetch(`https://api.ityou.works/transactions/send`, {
+  fetch(`https://api.ityou.works/vix/send`, {
     method: 'POST',
-    body,
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
+    body: JSON.stringify(body),
+    headers: {'Authorization': `Bearer ${token}`},
   })
     .then((res) => res.json())
+    .catch((error) => ({ error }))
+
+const fetchCards = (token) =>
+  fetch(`https://api.ityou.works/vix/card`, {
+    method: 'GET',
+    headers: { 'Authorization': `Bearer ${token}` }
+  })
+    .then((res) => res.json())
+    .then((data) => data)
     .catch((error) => ({ error }))
 
 function* sendMoneyRequest() {
@@ -21,7 +28,6 @@ function* sendMoneyRequest() {
     const { Auth } = store.getState()
     const formData = new FormData()
     const token = Auth.idToken
-    console.log(token)
 
     for (const key in payload) {
       if (payload.hasOwnProperty(key)) {
@@ -47,8 +53,53 @@ function* sendMoneyRequest() {
   })
 }
 
+function* requestCard() {
+  yield takeLatest(actions.CARDS_REQUEST, function*() {
+    const { Auth } = store.getState()
+    const token = Auth.idToken
+
+    const response = yield call(fetchCards, token)
+
+    if(!response.error) {
+      yield put({
+        type: actions.CARDS_SUCCESS,
+        payload: response
+      })
+    } else {
+      yield put({
+        type: actions.CARDS_ERROR,
+        payload: response.error
+      })
+    }
+  })
+}
+
+function* sendMoneyCardToCard() {
+  yield takeLatest(actions.SEND_MONEY_CARD_TO_CARD_REQUEST, function*({ payload, navigation }) {
+    const { Auth } = store.getState()
+    const token = Auth.idToken
+
+    const response = yield call(sendMoney, { token, payload })
+
+    if(!response.error) {
+      yield put({
+        type: actions.SEND_MONEY_CARD_TO_CARD_SUCCESS,
+        payload: response
+      })
+      yield navigation.push("Result")
+    } else {
+      yield put({
+        type: actions.SEND_MONEY_CARD_TO_CARD_ERROR,
+        payload: response.error
+      })
+      yield navigation.push("NoFound")
+    }
+  })
+}
+
 export default function* rootSaga() {
   yield all([
-    fork(sendMoneyRequest),
+    fork(requestCard),
+    fork(sendMoneyCardToCard)
   ])
 }
