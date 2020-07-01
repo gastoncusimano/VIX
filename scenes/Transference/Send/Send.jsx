@@ -8,6 +8,18 @@ import { PRIMARY_LIGHT,PRIMARY_DARK } from '../../../styles/colors'
 import { WINDOW_WIDTH } from '../../../styles/mixins'
 import { styles } from './index.style'
 /* STYLES END*/
+import ContactCard from './components/ContactCard'
+
+const steps = [{
+  id: 1,
+  component: <Text style={{ color: '#333' }}>STEP 1</Text>
+},{
+  id: 2,
+  component: <Text style={{ color: '#333' }}>STEP 2</Text>
+},{
+  id: 3,
+  component: <Text style={{ color: '#333' }}>STEP 2</Text>
+}]
 
 const HeaderList = (currentSlide) => (
   <View style={styles.headerContainer}>
@@ -36,7 +48,17 @@ const SendScene = ({ theme: { colors }, navigation}) => {
   const listRef = useRef(null)
   const [state, setState] = useState({
     currentSlide: 0,
-    steps: [{id: 1}, {id: 2}, {id: 3}]
+    formData: {
+      reason: "",
+      ammount: "",
+      card: {
+        name: '',
+        number: '',
+        alias: ''
+      },
+      originCard: {},
+      destinyCard: {}
+    }
   })
 
   const _goToNextPage = () => {
@@ -72,15 +94,14 @@ const SendScene = ({ theme: { colors }, navigation}) => {
         {HeaderList(state.currentSlide)}
         <View style={styles.wrapper}>
           <FlatList
-            data={[{id: 1}, {id: 2}, {id: 3}]}
+            data={steps}
             ref={listRef}
             horizontal
             keyExtractor={item => item.id}
             scrollEnabled={false}
             renderItem={({item}) => (
               <View style={{ width: WINDOW_WIDTH, paddingHorizontal: 15 }} >
-                <Text style={{ color: colors.darkText }} >{`HOLA ${item.id}`}</Text>
-                <Button mode='contained' onPress={_goToNextPage} >Siguiente</Button>
+                {item.component}
               </View>
             )}
           />
