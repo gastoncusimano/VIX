@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 /* OWN COMPONENTS */
 import Transfer from '../../scenes/Transference'
 import Result from '../../scenes/Transference/Result'
-import SendMoney from '../../scenes/Transference/Send'
+import SendMoney from '../../scenes/Transference/Send/Send'
 import NoFound from '../../scenes/Transference/NoFound'
 /* OWN COMPONENTS */
 
@@ -15,7 +15,7 @@ export default function(props) {
     <Stack.Navigator
       headerMode="screen"
       screenOptions={{ headerShown: false }}
-      initialRouteName="Transfer"
+      initialRouteName="SendMoney"
     >
       <Stack.Screen name="Result" component={Result} />
       <Stack.Screen name="NoFound"  component={NoFound} />

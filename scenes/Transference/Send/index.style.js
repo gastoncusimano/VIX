@@ -68,6 +68,30 @@ export const styles = StyleSheet.create({
     borderColor: SECONDARY, 
     marginRight: 10,
     borderRadius: 10
+  },
+  itemHeader: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
+  headerContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  container: {
+    flex: 1,
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+  },
+  activeIndicator: {
+    backgroundColor: '#FFF',
+    width: 20,
+    height: 20,
+    bottom: 0,
+    marginBottom: -15,
+    position: "absolute",
+    alignSelf: 'center',
+    transform: [{ rotate: 172 }]
   }
 })
 
