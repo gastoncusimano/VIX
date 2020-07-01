@@ -102,14 +102,14 @@ function CustomDrawerContent(props) {
               icon={(props) => (<DrawerIcon {...props} name={"md-help-circle"} />)}
               label="Ayuda"
               style={Styles.drawerItem}
-              onPress={() => props.navigation.navigate("Inicio")}
+              onPress={() => props.navigation.navigate("Help")}
               labelStyle={Styles.drawerItemText}
             />
             <DrawerItem
               icon={(props) => (<DrawerIcon {...props} name={"md-information-circle"} />)}
               label="Terminos y Condiciones"
               style={Styles.drawerItem}
-              onPress={() => props.navigation.navigate("Inicio")}
+              onPress={() => props.navigation.navigate("Terms")}
               labelStyle={Styles.drawerItemText}
             />
             <DrawerItem

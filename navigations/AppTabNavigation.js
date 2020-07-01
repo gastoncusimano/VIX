@@ -12,8 +12,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Text, withTheme } from "react-native-paper";
 import Home from "../scenes/HomePage";
 import * as _ from 'lodash'
-import InsertCard from '../scenes/InsertCard'
+import Help from '../scenes/Help'
+import Terms from '../scenes/Terms'
 import Camera from '../scenes/Camera'
+import InsertCard from '../scenes/InsertCard'
 import CashInStack from "./CashInStack";
 import PaymentStack from "./PaymentStack";
 import CardsStack from "./CardsStack";
@@ -96,6 +98,8 @@ function HomeNavigation() {
         component={TransferenceStack}
         options={{ title: "" }}
       />
+      <Stack.Screen name="Help" component={Help}/>
+      <Stack.Screen name="Terms" component={Terms}/>
       <Stack.Screen name="Camera" component={Camera}/>
       <Stack.Screen name="InsertCard" component={InsertCard}/>
       <Stack.Screen

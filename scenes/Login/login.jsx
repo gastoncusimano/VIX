@@ -47,7 +47,7 @@ const index = ({ navigation, theme: { colors }, loading, login, prefix, phoneNum
           </Animatable.View>
           <Form>
             <View style={{ paddingVertical: 20 }} >
-              <TextInput
+              {/* <TextInput
                 name="username"
                 label="Numero de Telefono"
                 value={state.username}
@@ -56,7 +56,7 @@ const index = ({ navigation, theme: { colors }, loading, login, prefix, phoneNum
                 keyboardType="number-pad"
                 onChangeText={onChange}
                 iconLeadingShown={false}
-              />
+              /> */}
               <TextInput 
                 type="password"
                 name="password"
