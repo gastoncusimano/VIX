@@ -31,7 +31,7 @@ function CustomInput(props) {
         </View>
       }
       <View style={style.inputContent} >
-        <Text style={style.inputName} >{props.label}</Text>
+        <Text style={[style.inputName, props.styleLabel]}>{props.label}</Text>
         <TextInput 
           {...props}
           style={[style.input, props.inputStyle && props.inputStyle]} 

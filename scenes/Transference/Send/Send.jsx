@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList, View, TextInput } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Appbar, Button, withTheme, Text } from 'react-native-paper'
 
@@ -12,13 +12,16 @@ import ContactCard from './components/ContactCard'
 
 const steps = [{
   id: 1,
-  component: <Text style={{ color: '#333' }}>STEP 1</Text>
+  subtitle: "Seleccionar tarjeta destino",
+  component: (props) => DestinyOriginStep(props)
 },{
   id: 2,
-  component: <Text style={{ color: '#333' }}>STEP 2</Text>
+  subtitle: "Seleccionar tarjeta origen",
+  component: (props) => DestinyOriginStep(props)
 },{
   id: 3,
-  component: <Text style={{ color: '#333' }}>STEP 2</Text>
+  subtitle: "Ingresar monto",
+  component: (props) => AmmountStep(props)
 }]
 
 const HeaderList = (currentSlide) => (
@@ -44,6 +47,82 @@ const HeaderList = (currentSlide) => (
   </View>
 )
 
+const AmmountStep = ({ submit, item, colors }) => (
+  <View style={{ width: WINDOW_WIDTH, flex: 1 }} >
+    <View style={{ paddingHorizontal: 15, flex: 1 }} >
+      <View style={{ marginBottom: 40 }} >
+        <Text style={{ 
+          color: colors.darkText, 
+          fontWeight: "bold", 
+          fontSize: 16,
+          marginBottom: 20
+        }}>Enviar dinero a</Text>
+        <ContactCard firstName="Wilmer" lastName="Salazar" />
+      </View>
+      <View>
+        <Text style={{ 
+          color: colors.darkText, 
+          fontWeight: "bold", 
+          fontSize: 16,
+          marginBottom: 20
+        }}>{item.subtitle}</Text>
+        <View style={{ width: "60%", alignSelf: "center" }} >
+          <TextInput 
+            value=""
+            style={{ borderBottomWidth: 1, borderColor: "rgba(0,0,0,.15)", fontSize: 18, textAlign: "right" }}
+            placeholder="$ 0.00            ARS"
+            placeholderTextColor="#333"
+            keyboardType="number-pad"
+            onChangeText={() => {}} 
+          />
+        </View>
+      </View>
+    </View>
+    <View style={{ width: '100%' }}>
+      <Button 
+        mode="contained"
+        color={colors.accent}
+        style={{ borderRadius: 0 }}
+        onPress={() => {}}
+        labelStyle={{ color: colors.primary, paddingVertical: 10, fontWeight: "bold" }}
+      >Continuar</Button>
+    </View>
+  </View>
+)
+
+const DestinyOriginStep = ({_goToNextPage, item, colors}) => (
+  <View style={{ width: WINDOW_WIDTH, flex: 1 }} >
+    <View style={{ paddingHorizontal: 15, flex: 1 }} >
+      <View style={{ marginBottom: 40 }} >
+        <Text style={{ 
+          color: colors.darkText, 
+          fontWeight: "bold", 
+          fontSize: 16,
+          marginBottom: 20
+        }}>Enviar dinero a</Text>
+        <ContactCard firstName="Wilmer" lastName="Salazar" />
+      </View>
+      <View>
+        <Text style={{ 
+          color: colors.darkText, 
+          fontWeight: "bold", 
+          fontSize: 16,
+          marginBottom: 20
+        }}>{item.subtitle}</Text>
+      </View>
+    </View>
+    <View style={{ width: '100%' }}>
+      <Button 
+        mode="contained"
+        color={colors.accent}
+        style={{ borderRadius: 0 }}
+        onPress={() => _goToNextPage()}
+        labelStyle={{ color: colors.primary, paddingVertical: 10, fontWeight: "bold" }}
+      >Continuar</Button>
+    </View>
+  </View>
+)
+
 const SendScene = ({ theme: { colors }, navigation}) => {
   const listRef = useRef(null)
   const [state, setState] = useState({
@@ -62,7 +141,7 @@ const SendScene = ({ theme: { colors }, navigation}) => {
   })
 
   const _goToNextPage = () => {
-    if (state.currentSlide === state.steps.length - 1) 
+    if (state.currentSlide === steps.length - 1) 
       return
     else
       setState({ ...state, currentSlide: ++state.currentSlide })
@@ -96,14 +175,11 @@ const SendScene = ({ theme: { colors }, navigation}) => {
           <FlatList
             data={steps}
             ref={listRef}
+            style={{ flex: 1, marginBottom: -20 }}
             horizontal
             keyExtractor={item => item.id}
             scrollEnabled={false}
-            renderItem={({item}) => (
-              <View style={{ width: WINDOW_WIDTH, paddingHorizontal: 15 }} >
-                {item.component}
-              </View>
-            )}
+            renderItem={({item}) => item.component({_goToNextPage, item, colors})}
           />
 
         </View>
