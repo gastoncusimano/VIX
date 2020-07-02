@@ -1,14 +1,34 @@
 import React from 'react'
-import { View, Image, ScrollView} from 'react-native'
+import { View, Image, ScrollView, FlatList} from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Appbar, Button, withTheme, Text, TouchableRipple } from 'react-native-paper'
 /* STYLES */
 import { PRIMARY_LIGHT,PRIMARY_DARK, SECONDARY } from '../../styles/colors'
 import { Container, styles } from './index.style'
 /* STYLES END*/
+import { connect } from 'react-redux'
 
-const ResultScene = ({ theme: { colors }, navigation}) => {
- 
+const ResultScene = ({ theme: { colors }, route: { params }, cards, navigation}) => {
+  const renderItem = (data) => {
+    return(
+      <>
+        <View style={{borderRadius: 7, marginTop: 25, marginHorizontal: 20, padding: 20, borderColor: '#ddd', backgroundColor: '#f6f6f6', borderWidth: 1}}>
+          <Image source={require('../../assets/ico_vix.png')} style={{width: 60, height: 25}} />
+          <Image source={require('../../assets/chipcard.png')} style={{width: 50, height: 30, marginTop: 20}} />
+          <View style={{paddingTop: 15, paddingHorizontal: 5}}>
+            <Text style={{color: '#ddd', fontSize: 18}}>{data.item.card_number}</Text>
+          </View>
+          <View style={{paddingTop: 5,width: '100%'}}>
+            <Text style={{color: '#ddd', fontSize: 15, textAlign: 'right', marginRight: 20}}>{data.item.expiration_date}</Text>
+          </View>
+          <View style={{paddingTop: 10,width: '100%'}}>
+            <Text style={{color: '#ddd', fontSize: 16, textTransform: 'uppercase'}}>{data.item.card_holder_name}</Text>
+          </View>
+        </View>
+        <Text style={{color:'black', width:'100%', paddingLeft: 20, paddingTop: 10, fontSize: 16}}>Referencia: {data.item.reference}</Text>
+      </>
+    )
+  }
   return (
     <>
       <LinearGradient 
@@ -51,6 +71,11 @@ const ResultScene = ({ theme: { colors }, navigation}) => {
                     <Text style={{color:'black', width:'100%', textAlign:'center', paddingTop: 10, fontSize: 16}}>Agregar tarjeta</Text>
                   </>
                 </TouchableRipple>
+                  <FlatList
+                    data={cards}
+                    renderItem={(data) => renderItem(data)}
+                    keyExtractor={(item) => item.id}
+                  />
             </ScrollView>
           </View>
       </LinearGradient>
@@ -58,4 +83,6 @@ const ResultScene = ({ theme: { colors }, navigation}) => {
   )
 }
 
-export default withTheme(ResultScene)
+export default connect(state => ({
+  cards: state.InsertCard.cards
+}), { })(withTheme(ResultScene))

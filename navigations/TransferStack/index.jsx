@@ -15,7 +15,7 @@ export default function(props) {
     <Stack.Navigator
       headerMode="screen"
       screenOptions={{ headerShown: false }}
-      initialRouteName="SendMoney"
+      initialRouteName="Transfer"
     >
       <Stack.Screen name="Result" component={Result} />
       <Stack.Screen name="NoFound"  component={NoFound} />

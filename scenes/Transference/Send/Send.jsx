@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { FlatList, View, TextInput } from 'react-native'
+import { FlatList, View, TextInput, Image } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Appbar, Button, withTheme, Text } from 'react-native-paper'
 
@@ -23,6 +23,84 @@ const steps = [{
   subtitle: "Ingresar monto",
   component: (props) => AmmountStep(props)
 }]
+
+const renderItem = (data) => {
+  console.log(data)
+  return(
+    <>
+      <View style={{borderRadius: 7, marginTop: 25, marginHorizontal: 20, padding: 20, borderColor: '#ddd', backgroundColor: '#f6f6f6', borderWidth: 1}}>
+        <Image source={require('../../../assets/ico_vix.png')} style={{width: 60, height: 25}} />
+        <Image source={require('../../../assets/chipcard.png')} style={{width: 50, height: 30, marginTop: 20}} />
+        <View style={{paddingTop: 15, paddingHorizontal: 5}}>
+          <Text style={{color: '#ddd', fontSize: 18}}>{data.item.item.card_number}</Text>
+        </View>
+        <View style={{paddingTop: 5,width: '100%'}}>
+          <Text style={{color: '#ddd', fontSize: 15, textAlign: 'right', marginRight: 20}}>{data.item.item.expiration_date}</Text>
+        </View>
+        <View style={{paddingTop: 10,width: '100%'}}>
+          <Text style={{color: '#ddd', fontSize: 16, textTransform: 'uppercase'}}>{data.item.item.card_holder_name}</Text>
+        </View>
+      </View>
+      <Text style={{color:'black', width:'100%', paddingLeft: 20, paddingTop: 10, fontSize: 16}}>Seleccionada</Text>
+    </>
+  )
+}
+
+const DATA = [
+  {
+  item: {
+    Public: null,
+    card_brand: {
+      created_at: "2020-02-16T15:56:04.000Z",
+      id: 1,
+      name: "Visa",
+      updated_at: "2020-02-16T15:56:04.000Z",
+    },
+    card_holder_name: "Gaston cusimano",
+    card_issuer: {
+      country: null,
+      created_at: "2020-02-16T15:53:36.000Z",
+      id: 1,
+      name: "BBVA",
+      updated_at: "2020-02-16T15:53:36.000Z",
+    },
+    card_number: "4532296200336462",
+    card_type: {
+      created_at: "2020-02-16T15:53:05.000Z",
+      id: 1,
+      name: "Crédito",
+      updated_at: "2020-02-16T15:55:32.000Z",
+    },
+    created_at: "2020-07-02T12:14:01.000Z",
+    customer: {
+      created_at: "2020-05-26T20:50:21.000Z",
+      customer_job_type: null,
+      customer_marital_status: null,
+      customer_sex: null,
+      customer_status: null,
+      date_of_birth: null,
+      dni: null,
+      document_number: null,
+      document_type: null,
+      first_name: "Cuenta",
+      id: 12,
+      last_name: null,
+      name: null,
+      nationality: null,
+      place_of_birth: null,
+      second_name: "Cuenta",
+      tax_id: null,
+      updated_at: "2020-05-27T13:47:14.000Z",
+      user: 33,
+    },
+    expiration_date: "10/25",
+    id: 64,
+    last_four_digits: null,
+    reference: "Jajd",
+    updated_at: "2020-07-02T12:14:01.000Z",
+  },
+},
+]
 
 const HeaderList = (currentSlide) => (
   <View style={styles.headerContainer}>
@@ -109,6 +187,11 @@ const DestinyOriginStep = ({_goToNextPage, item, colors}) => (
           fontSize: 16,
           marginBottom: 20
         }}>{item.subtitle}</Text>
+        <FlatList
+          data={DATA}
+          renderItem={(data) => renderItem(data)}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </View>
     <View style={{ width: '100%' }}>
@@ -161,7 +244,8 @@ const SendScene = ({ theme: { colors }, navigation}) => {
         end={[0, 0.6]}
       >
         <Appbar.Header style={{ elevation: 0, backgroundColor: "#00000000" }}>
-          <Appbar.Content titleStyle={{ fontSize: 18, paddingLeft: '38%' }} title="Transferir"  />
+          <Appbar.BackAction onPress={navigation.goBack} />
+          <Appbar.Content titleStyle={{ fontSize: 18, paddingLeft: '25%' }} title="Transferir"  />
         </Appbar.Header>
       </LinearGradient>
       <LinearGradient 
