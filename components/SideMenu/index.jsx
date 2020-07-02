@@ -61,7 +61,7 @@ function CustomDrawerContent(props) {
               size={60}
             />
             <View style={{ marginLeft: 20 }} >
-              <Title style={{ color: "#FFF", fontSize: 18 , marginBottom: 5 }} >{`${props.profile.customer?.name} ${props.profile.customer?.last_name}`}</Title>
+              <Title style={{ color: "#FFF", fontSize: 18 , marginBottom: 5 }} >{`${props.profile.customer?.first_name} ${props.profile.customer?.last_name}`}</Title>
               <ProfileButton underlayColor="rgba(255,255,255,.2)" onPress={() => props.navigation.navigate("Profile")} >
                 <Text style={{ color: "#FFF" }} >Ver Perfil</Text>
               </ProfileButton>

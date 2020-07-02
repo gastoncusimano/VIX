@@ -57,7 +57,7 @@ const AmmountStep = ({ submit, item, colors }) => (
           fontSize: 16,
           marginBottom: 20
         }}>Enviar dinero a</Text>
-        <ContactCard firstName="Wilmer" lastName="Salazar" />
+        <ContactCard firstName="Gastón" lastName="Cusimano" />
       </View>
       <View>
         <Text style={{ 
@@ -100,7 +100,7 @@ const DestinyOriginStep = ({_goToNextPage, item, colors}) => (
           fontSize: 16,
           marginBottom: 20
         }}>Enviar dinero a</Text>
-        <ContactCard firstName="Wilmer" lastName="Salazar" />
+        <ContactCard firstName="Gastón" lastName="Cusimano" />
       </View>
       <View>
         <Text style={{ 
