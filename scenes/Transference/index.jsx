@@ -140,9 +140,9 @@ function TransferScene({
                 placeholder={"Ingrese nombre o número"}
                 value={state.q}
             />
-            {/* <TouchableRipple onPress={() => _handleSearch("")}>
+            <TouchableRipple onPress={() => _handleSearch(null)}>
                 <FontAwesome name="times-circle" color='rgba(0,0,0, 0.2)' size={15} style={{paddingTop: 13, marginRight: 15}} />
-            </TouchableRipple> */}
+            </TouchableRipple>
             </View>
           <FlatList
             style={{maxHeight: '70%'}}

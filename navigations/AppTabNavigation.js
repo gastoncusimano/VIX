@@ -64,7 +64,7 @@ const HeaderScreen = ({ scene, navigation, previous, profile }) => {
         }}
       >
         <View style={styles.circleAvatar}>
-          <Text style={styles.circleTextAvatar}>{`${!_.isEmpty(profile.customer.name) ? profile.customer.name.charAt(0)
+          <Text style={styles.circleTextAvatar}>{`${!_.isEmpty(profile.customer.first_name) ? profile.customer.first_name.charAt(0)
             .toUpperCase() : ""}${!_.isEmpty(profile.customer.last_name) ? profile.customer.last_name.charAt(0).toUpperCase() : "" }`}</Text>
         </View>
         <View style={styles.welcomeText}>
@@ -72,7 +72,7 @@ const HeaderScreen = ({ scene, navigation, previous, profile }) => {
             Hola{"\n"}
             <Text
               style={{ fontWeight: "bold", color: '#ffac00' }}
-            >{`${profile.customer?.name} ${profile.customer?.last_name}`}</Text>
+            >{`${profile.customer?.first_name} ${profile.customer?.last_name}`}</Text>
           </Text>
         </View>
         <View style={styles.circleBell}>

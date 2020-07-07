@@ -4,6 +4,7 @@ import {
 } from 'redux-saga/effects'
 import actions from './actions'
 import { store } from '../store'
+import transferActions from '../Transfer/actions'
 
 const createCard = ({body, token}) =>
   fetch('https://api.ityou.works/cards', {
@@ -27,6 +28,8 @@ function* createCardRequest() {
         type: actions.CREATE_CARD_SUCCESS,
         payload: response
       })
+
+      yield put({ type: transferActions.CARDS_REQUEST })
       yield navigation.goBack()
     } else {
       yield put({
