@@ -57,6 +57,25 @@ const InsertCard = ({ theme: { colors }, navigation, submitCard, loading }) => {
     }
   }
 
+  const formHasError = (value, field) => {
+    let validations = {
+      card_holder_name: (() => {
+        return _.isEmpty(value)
+      })(),
+      card_number: (() => {
+        return _.isEmpty(value) || value.length < 16
+      })(),
+      reference: (() => {
+        return _.isEmpty(value)
+      })(),
+      expiration_date: (() => {
+        return _.isEmpty(value)
+      })(),
+    }
+
+    return validations[field]
+  }
+
   return (
     <>
       <LinearGradient
@@ -89,47 +108,92 @@ const InsertCard = ({ theme: { colors }, navigation, submitCard, loading }) => {
                 </>
               </TouchableRipple>
               <View>
-                <TextInput
-                  value={state.card_holder_name}
-                  placeholder="Nombre y Apellido del titular"
-                  onChangeText={(value) => onChange("card_holder_name", value)}
-                  placeholderTextColor={colors.darkText}
-                  style={styles.input}
-                />
-                <TextInput
-                  value={state.card_number}
-                  placeholder="Nro de Tarjeta"
-                  onChangeText={(value) => onChange("card_number", value)}
-                  placeholderTextColor={colors.darkText}
-                  style={styles.input}
-                />
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                  <TextInputMask
-                    type="datetime"
-                    style={[styles.input, { width: '48%' }]}
-                    value={state.expiration_date}
-                    options={{ format: 'MM/YY' }}
-                    placeholder="Vencimiento"
-                    placeholderTextColor={colors.darkText}
-                    onChangeText={text => onChange('expiration_date', text)}
-                  />
+                <View>
                   <TextInput
-                    value={state.cvv}
-                    placeholder="CVV"
-                    onChangeText={(value) => onChange("cvv", value)}
+                    value={state.card_holder_name}
+                    placeholder="Nombre y Apellido del titular"
+                    onChangeText={(value) => onChange("card_holder_name", value)}
                     placeholderTextColor={colors.darkText}
-                    style={[styles.input, { width: '48%' }]}
+                    style={[styles.input, formHasError(state.card_holder_name, 'card_holder_name') && { borderColor: 'red' }]}
                   />
+                  {
+                    formHasError(state.card_holder_name, 'card_holder_name') &&
+                    <Text style={{ 
+                      color: colors.subtitleText,
+                      fontSize: 12, 
+                      marginTop: -15, 
+                      fontStyle: 'italic',
+                    }}>*Requerido</Text>
+                  }
+                </View>
+                <View>
+                  <TextInput
+                    value={state.card_number}
+                    placeholder="Nro de Tarjeta"
+                    validation={formHasError(state.card_number, 'card_number')}
+                    onChangeText={(value) => onChange("card_number", value)}
+                    placeholderTextColor={colors.darkText}
+                    style={[styles.input, formHasError(state.card_number, 'card_number') && { borderColor: 'red' }]}
+                  />
+                  <Text style={{ 
+                    color: colors.subtitleText,
+                    fontSize: 12, 
+                    marginTop: -15, 
+                    fontStyle: 'italic',
+                  }} >La tarjeta debe contener 16 digitos</Text>
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                  <View style={{ width: '48%' }}>
+                    <TextInputMask
+                      type="datetime"
+                      style={[
+                        styles.input,
+                        formHasError(state.expiration_date, 'expiration_date') && { borderColor: 'red' },
+                      ]}
+                      value={state.expiration_date}
+                      options={{ format: 'MM/YY' }}
+                      placeholder="Vencimiento"
+                      placeholderTextColor={colors.darkText}
+                      onChangeText={text => onChange('expiration_date', text)}
+                    />
+                    {
+                      formHasError(state.expiration_date, 'expiration_date') &&
+                      <Text style={{ 
+                        color: colors.subtitleText,
+                        fontSize: 12, 
+                        marginTop: -15, 
+                        fontStyle: 'italic',
+                      }}>*Requerido</Text>
+                    }
+                  </View>
+                  <View style={{ width: '48%' }} >
+                    <TextInput
+                      value={state.cvv}
+                      placeholder="CVV"
+                      onChangeText={(value) => onChange("cvv", value)}
+                      placeholderTextColor={colors.darkText}
+                      style={[styles.input]}
+                    />
+                  </View>
                 </View>
                 <View>
                   <TextInput
                     value={state.reference}
                     placeholder="Alias de Tarjeta"
+                    validation={formHasError(state.reference, 'reference')}
                     onChangeText={(value) => onChange("reference", value)}
                     placeholderTextColor={colors.darkText}
-                    style={styles.input}
+                    style={[
+                      styles.input, 
+                      formHasError(state.reference, 'reference') && { borderColor: 'red' }
+                    ]}
                   />
-                  <Text style={{ color: colors.subtitleText }} >El Alias debe contener como minimo 6 digitos</Text>
+                  <Text style={{ 
+                    color: colors.subtitleText,
+                    fontSize: 12, 
+                    marginTop: -15, 
+                    fontStyle: 'italic',
+                  }}>*El alias debe contener minimo 16 digitos</Text>
                 </View>
               </View>
             </View>
@@ -152,7 +216,7 @@ const InsertCard = ({ theme: { colors }, navigation, submitCard, loading }) => {
                 color={colors.accent} 
                 onPress={submit}
                 loading={loading}
-                disabled={loading}
+                disabled={loading || !validateFields()}
                 labelStyle={{ color: colors.primary }} 
               >Confirmar</Button>
             </View>

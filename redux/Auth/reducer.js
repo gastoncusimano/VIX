@@ -4,7 +4,7 @@ const initialState = {
   uuid: null,
   error: null,
   prefix: null,
-  profile: null,
+  profile: { customer: null },
   idToken: null,
   fetched: false,
   message: null,

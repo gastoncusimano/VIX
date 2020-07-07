@@ -26,8 +26,8 @@ export const styles = StyleSheet.create({
     marginTop: 5,
     paddingVertical: 20,
     backgroundColor: "#FFF",
-    borderTopEndRadius: 10, 
-    borderTopStartRadius: 10,
+    borderTopEndRadius: 20, 
+    borderTopStartRadius: 20,
   },  
   contactItem: {
     height: 60,
@@ -92,6 +92,13 @@ export const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: 'center',
     transform: [{ rotate: 172 }]
+  },
+  inputCustom: { 
+    flex: 1,
+    fontSize: 18, 
+    textAlign: "center", 
+    borderColor: "rgba(0,0,0,.15)", 
+    borderBottomWidth: 1, 
   }
 })
 

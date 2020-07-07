@@ -268,7 +268,7 @@ export function* userRequest() {
 export function* checkAuthorization() {
   yield takeLatest(actions.CHECK_AUTHORIZATION, function*() {
     const data = yield AsyncStorage.getItem('@User:key');
-    console.log(data)
+
     if (data !== null) {
       const dataJson = JSON.parse(data)
       yield put({

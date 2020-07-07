@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
-import { FlatList, View, TextInput, Image } from 'react-native'
+import { FlatList, View, TextInput, Image, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Appbar, Button, withTheme, Text } from 'react-native-paper'
+import { Appbar, Button, withTheme, Text, TouchableRipple } from 'react-native-paper'
 
 /* STYLES */
 import { PRIMARY_LIGHT,PRIMARY_DARK } from '../../../styles/colors'
@@ -24,11 +24,10 @@ const steps = [{
   component: (props) => AmmountStep(props)
 }]
 
-const renderItem = (data) => {
-  console.log(data)
+const renderItem = (data, colors) => {
   return(
     <>
-      <View style={{borderRadius: 7, marginTop: 25, marginHorizontal: 20, padding: 20, borderColor: '#ddd', backgroundColor: '#f6f6f6', borderWidth: 1}}>
+      <View style={{borderRadius: 7, marginTop: 10, padding: 20, borderColor: '#ddd', backgroundColor: '#f6f6f6', borderWidth: 1}}>
         <Image source={require('../../../assets/ico_vix.png')} style={{width: 60, height: 25}} />
         <Image source={require('../../../assets/chipcard.png')} style={{width: 50, height: 30, marginTop: 20}} />
         <View style={{paddingTop: 15, paddingHorizontal: 5}}>
@@ -41,7 +40,14 @@ const renderItem = (data) => {
           <Text style={{color: '#ddd', fontSize: 16, textTransform: 'uppercase'}}>{data.item.item.card_holder_name}</Text>
         </View>
       </View>
-      <Text style={{color:'black', width:'100%', paddingLeft: 20, paddingTop: 10, fontSize: 16}}>Seleccionada</Text>
+      <Text 
+        style={{
+          color:colors.subtitleText, 
+          width:'100%', 
+          paddingTop: 10, 
+          fontSize: 14,
+          fontWeight: 'bold'
+        }}>Seleccionada</Text>
     </>
   )
 }
@@ -128,14 +134,28 @@ const HeaderList = (currentSlide) => (
 const AmmountStep = ({ submit, item, colors }) => (
   <View style={{ width: WINDOW_WIDTH, flex: 1 }} >
     <View style={{ paddingHorizontal: 15, flex: 1 }} >
-      <View style={{ marginBottom: 40 }} >
-        <Text style={{ 
-          color: colors.darkText, 
-          fontWeight: "bold", 
-          fontSize: 16,
-          marginBottom: 20
-        }}>Enviar dinero a</Text>
-        <ContactCard firstName="Gastón" lastName="Cusimano" />
+      <View style={{ marginBottom: 40, flexDirection: 'row', justifyContent: 'space-between' }} >
+        <View style={{ width: " 50%", marginRight: 5 }} >
+          <Text style={{ 
+            color: colors.darkText, 
+            fontWeight: "bold", 
+            fontSize: 16,
+            marginBottom: 20
+          }}>Enviar dinero a</Text>
+          <ContactCard firstName="Gastón" lastName="Cusimano" reference="XXFE4" />
+        </View>
+        <View style={{ width: " 50%" }}>
+          <Text 
+            style={{ 
+              color: colors.darkText, 
+              fontWeight: "bold", 
+              fontSize: 16,
+              marginBottom: 20
+            }}
+            numberOfLines={2}
+          >Tarjeta Origen</Text>
+          <ContactCard firstName="Bco." lastName="Supervisor" reference="CCFE4" />
+        </View>
       </View>
       <View>
         <Text style={{ 
@@ -144,15 +164,16 @@ const AmmountStep = ({ submit, item, colors }) => (
           fontSize: 16,
           marginBottom: 20
         }}>{item.subtitle}</Text>
-        <View style={{ width: "60%", alignSelf: "center" }} >
-          <TextInput 
+        <View style={{ width: "60%", alignSelf: "center", flexDirection: "row" }} >
+          <TextInput
             value=""
-            style={{ borderBottomWidth: 1, borderColor: "rgba(0,0,0,.15)", fontSize: 18, textAlign: "right" }}
-            placeholder="$ 0.00            ARS"
+            style={styles.inputCustom}
+            placeholder="$ 0.00"
             placeholderTextColor="#333"
             keyboardType="number-pad"
             onChangeText={() => {}} 
           />
+          <Text style={{ color: colors.darkText, fontSize: 18, borderBottomWidth: 1, borderColor: "rgba(0,0,0,.15)" }} >ARS</Text>
         </View>
       </View>
     </View>
@@ -168,7 +189,7 @@ const AmmountStep = ({ submit, item, colors }) => (
   </View>
 )
 
-const DestinyOriginStep = ({_goToNextPage, item, colors}) => (
+const DestinyOriginStep = ({ handleSetCard, _goToNextPage, item, colors, navigation}) => (
   <View style={{ width: WINDOW_WIDTH, flex: 1 }} >
     <View style={{ paddingHorizontal: 15, flex: 1 }} >
       <View style={{ marginBottom: 40 }} >
@@ -181,16 +202,27 @@ const DestinyOriginStep = ({_goToNextPage, item, colors}) => (
         <ContactCard firstName="Gastón" lastName="Cusimano" />
       </View>
       <View>
-        <Text style={{ 
-          color: colors.darkText, 
-          fontWeight: "bold", 
-          fontSize: 16,
-          marginBottom: 20
-        }}>{item.subtitle}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+          <Text style={{ 
+            color: colors.darkText, 
+            fontWeight: "bold", 
+            fontSize: 16,
+            marginBottom: 20
+          }}>{item.subtitle}</Text>
+          <TouchableOpacity
+            onPress={() => item.id === 2 
+              ? navigation.push("InsertCard") 
+              : navigation.push("DestinyCard", { handleSetCard })
+            }
+            activeOpacity={0.5}
+          >
+            <Text style={{ color: colors.accent, fontWeight: 'bold' }} >Nueva tarjeta</Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           data={DATA}
-          renderItem={(data) => renderItem(data)}
-          keyExtractor={(item) => item.id}
+          renderItem={(data) => renderItem(data, colors)}
+          keyExtractor={({item}) => item.id}
         />
       </View>
     </View>
@@ -222,6 +254,10 @@ const SendScene = ({ theme: { colors }, navigation}) => {
       destinyCard: {}
     }
   })
+
+  const handleSetCard = (field, value) => {
+    setState({ ...state, [field]: value })
+  }
 
   const _goToNextPage = () => {
     if (state.currentSlide === steps.length - 1) 
@@ -263,7 +299,7 @@ const SendScene = ({ theme: { colors }, navigation}) => {
             horizontal
             keyExtractor={item => item.id}
             scrollEnabled={false}
-            renderItem={({item}) => item.component({_goToNextPage, item, colors})}
+            renderItem={({item}) => item.component({_goToNextPage, item, colors, navigation, handleSetCard})}
           />
 
         </View>
