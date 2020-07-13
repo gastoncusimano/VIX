@@ -80,7 +80,7 @@ function* sendMoneyCardToCard() {
     const token = Auth.idToken
 
     const response = yield call(sendMoney, { token, payload })
-
+    console.log(response, payload)
     if(!response.error) {
       yield put({
         type: actions.SEND_MONEY_CARD_TO_CARD_SUCCESS,
