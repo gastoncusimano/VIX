@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import { connect } from 'react-redux'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, RefreshControl } from 'react-native'
 import { Appbar, Text } from 'react-native-paper'
 import { styles, Container } from './index.style'
@@ -33,6 +33,17 @@ function ActivitiesScene({ navigation, data, filters, ...props }) {
     }
   }
 
+  const [state, setState] = useState({transactions: []})
+  useEffect(() => {
+    fetch(`https://api.ityou.works/vix/transactions`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${props.token}`
+        }
+      }).then((res) => res.json()).then((res) => console.log(res))
+  }, [])
+  // https://api.ityou.works/vix/transactions
   const _onRefresh = () => {
     setRefreshing(true)
     props.fetchUser(props.token)
