@@ -222,7 +222,7 @@ const HeaderList = (currentSlide) => (
 )
 
 const AmmountStep = ({ onSubmit, item, colors, originCard, destinyCard, usdConvertion, onChange, formData: { ammount }, user }) => (
-  <View style={{ width: WINDOW_WIDTH, flex: 1 }} >
+  <ScrollView  contentContainerStyle={{ flex: 1 }} style={{ width: WINDOW_WIDTH }} >
     <View style={{ paddingHorizontal: 15, flex: 1 }} >
       <View style={{ marginBottom: 40, flexDirection: 'row', justifyContent: 'space-between' }} >
         <View style={{ width: " 50%", marginRight: 5 }} >
@@ -318,7 +318,7 @@ const AmmountStep = ({ onSubmit, item, colors, originCard, destinyCard, usdConve
         labelStyle={{ color: colors.primary, paddingVertical: 10, fontWeight: "bold" }}
       >Continuar</Button>
     </View>
-  </View>
+  </ScrollView>
 )
 
 const DestinyOriginStep = ({
